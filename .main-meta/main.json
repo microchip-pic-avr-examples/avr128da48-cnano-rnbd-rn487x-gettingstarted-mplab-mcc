@@ -1,0 +1,54 @@
+{
+    "metaDataVersion": "1.0.0",
+    "category": "com.microchip.ide.project",
+    "content": {
+        "metaDataVersion": "1.3.0",
+        "name": "com.microchip.mcu8.mplabx.project.avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
+        "version": " ",
+        "displayName": "",
+        "projectName": "avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
+        "shortDescription": "Thiscode example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devicesusing AVRmicrocontroller.\r\n\r\nCompatible MCUs are: AVR128D48",
+        "ide": {
+            "name": "MPLAB X",
+            "semverRange": ">=6.0.5"
+        },
+        "compiler": [
+            {
+                "name": "XC8",
+                "semverRange": "^2.40.0"
+            }
+        ],
+        "dfp": {
+            "name": "",
+            "semverRange": ""
+        },
+        "configurator": {
+            "name": "",
+            "semverRange": ""
+        },
+        "device": {
+            "metaDataVersion": "1.0.0",
+            "category": "com.microchip.portal.contentRef",
+            "content": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.device",
+                "name": "AVR128DA48",
+                "versionRange": "*"
+            }
+        },
+        "author": "Dinesh Arasu",
+        "peripherals": [],
+        "keywords": [],
+        "additionalData": {
+            "longDescription": {
+                "metaDataVersion": "1.0.0",
+                "category": "com.microchip.portal.fileRef",
+                "content": {
+                    "metaDataVersion": "1.0.0",
+                    "fileName": "./README.md",
+                    "mimeType": "text/markdown"
+                }
+            }
+        }
+    }
+}
