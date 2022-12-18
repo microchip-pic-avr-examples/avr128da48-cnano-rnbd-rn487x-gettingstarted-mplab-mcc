@@ -40,7 +40,6 @@
 int main(void)
 {
     SYSTEM_Initialize();
-    
     Example_Initialized();
 
 

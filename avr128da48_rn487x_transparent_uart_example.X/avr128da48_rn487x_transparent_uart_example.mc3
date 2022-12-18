@@ -168,12 +168,12 @@
          <hash>a4b86516624ce3965c426e9e769a13a958d6e5c09998fb2d3528736da9396ccc</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\uart\uart_interface.h</file>
-         <hash>778e6a44142bb70084908db0a0c17b6c875ad26605a7f6a2759e9622396c890a</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\uart\src\usart1.c</file>
          <hash>bee800ca30a22df88a7d1e161f7594f7f923f8b0aeefca72f89240939584913a</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\uart\uart_interface.h</file>
+         <hash>778e6a44142bb70084908db0a0c17b6c875ad26605a7f6a2759e9622396c890a</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\timer\delay.h</file>
@@ -256,12 +256,12 @@
          <hash>40a98432dc4f55c75fe80bd35284b5d53cd79a5511ae2a53410177ec0738720a</hash>
       </entry>
       <entry>
-         <file>mcc_generated_files\system\src\protected_io.S</file>
-         <hash>e71791807bb5f87f45c5af393675eaec6337c8d6a3fa96c03eaafaf125c177a6</hash>
-      </entry>
-      <entry>
          <file>mcc_generated_files\system\src\config_bits.c</file>
          <hash>2f64f6e7a466506d37d97eed5514cf072ff8197f884994014a25e95d28ec9045</hash>
+      </entry>
+      <entry>
+         <file>mcc_generated_files\system\src\protected_io.S</file>
+         <hash>e71791807bb5f87f45c5af393675eaec6337c8d6a3fa96c03eaafaf125c177a6</hash>
       </entry>
       <entry>
          <file>mcc_generated_files\system\protected_io.h</file>

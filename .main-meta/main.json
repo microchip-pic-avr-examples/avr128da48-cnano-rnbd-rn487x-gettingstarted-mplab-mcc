@@ -5,9 +5,9 @@
         "metaDataVersion": "1.3.0",
         "name": "com.microchip.mcu8.mplabx.project.avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
         "version": "1.0.0",
-        "displayName": "AVR128DA48 RNBD451_RN487x Demo Application for Transparent UART & Basic Data Exchange",
+        "displayName": "AVR128DA48 RNBD451_RN487x Demo Application for Transparent UART and Basic Data Exchange",
         "projectName": "avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
-        "shortDescription": "Thiscode example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devices using AVRmicrocontroller.\r\n\r\nCompatible MCUs are: AVR128D48",
+        "shortDescription": "This code example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devices using AVRmicrocontroller.\r\n\r\nCompatible MCUs are: AVR128D48",
         "ide": {
             "name": "MPLAB X",
             "semverRange": ">=6.0.5"
@@ -20,11 +20,11 @@
         ],
         "dfp": {
             "name": "AVR-Dx_DFP",
-            "semverRange": "2.1.152"
+            "semverRange": "^2.1.152"
         },
         "configurator": {
             "name": "MCC",
-            "semverRange": "5.1.17"
+            "semverRange": "^5.1.17"
         },
         "device": {
             "metaDataVersion": "1.0.0",
@@ -41,9 +41,7 @@
 			"USART"
 		],
         "keywords": [
-			"RN4870",
-			"RN4871",
-			"RNBD"
+			"RN4870"
 		],
         "additionalData": {
             "longDescription": {
