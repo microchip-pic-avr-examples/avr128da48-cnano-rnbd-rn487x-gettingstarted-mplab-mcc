@@ -7,7 +7,7 @@
         "version": "1.0.0",
         "displayName": "AVR128DA48 RNBD451_RN487x Demo Application for Transparent UART and Basic Data Exchange",
         "projectName": "avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
-        "shortDescription": "This code example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devices using AVRmicrocontroller.\r\n\r\nCompatible MCUs are: AVR128D48",
+        "shortDescription": "This code example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devices using AVRmicrocontroller.",
         "ide": {
             "name": "MPLAB X",
             "semverRange": ">=6.0.5"
