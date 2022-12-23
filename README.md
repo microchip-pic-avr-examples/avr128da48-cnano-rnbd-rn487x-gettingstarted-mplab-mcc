@@ -10,7 +10,7 @@
 -   [Hardware Used](#hardware-used)
 -   [Software Prerequisite](#software-prerequisite)
 -   [Project Setup](#project-setup)
--   [RNBD451 Set Up & Running Example Application](#rnbd451-set-up-&-running-example-application)
+-   [RNBD451 Set Up and Running Example Application](#rnbd451-set-up-and-running-example-application)
     -   [RNBD Basic Data Exchange PIN Settings](#rnbd-basic-data-exchange-pin-settings)
     -   [RNBD Transparent UART Application PIN Settings](#rnbd-transparent-uart-application-pin-settings)
     -   [RNBD GPIO Based Connection Setup](#rnbd-gpio-based-connection-setup)
@@ -27,9 +27,9 @@
 
 # Introduction<a name="introduction"></a>
 
-The MPLAB® Code Configurator RNBD\(TBD\)/[RN487x](https://www.microchip.com/wwwproducts/en/RN4870) BLE Modules Library allows quick and easy<br /> configuration of the C code generated software driver based upon the user’s selected API<br /> features available from the MCC Library. Generated Driver code supports use of either<br /> BLE Module with use of a AVR device.
+The MPLAB® Code Configurator (MCC) RNBD\(TBD\)/[RN487x](https://www.microchip.com/wwwproducts/en/RN4870) BLE Modules Library allows to promptly configure the C code-generated software driver, based on the user’s selected API features available in the MCC Library. The Generated Driver code can support the BLE module using a AVR device
 
-The library module uses a Graphic User Interface \(GUI\) presented by MCC within MPLABX<br /> which allows for selection of desired configuration, and custom configurations of the<br /> protocol. Customized C code is generated within the MPLABX project, in a folder named<br /> "MCC Generated Files".
+The library module uses a Graphic User Interface (GUI) provided by the MCC, used to set the configuration, and the custom configurations of the protocol. The Customized C code is generated within the MPLAB X project, in a folder named "MCC Generated Files".
 
 This Library uses \(1\) UART, \(1\) GPIO, and DELAY support at minimal.
 
@@ -66,7 +66,7 @@ Refer to the /images folder for source files & max resolution.
 -   Microchip Bluetooth \([BLE](https://www.microchip.com/design-centers/wireless-connectivity/bluetooth)\)
 -   [RNBD User Guide\(TBD\)](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)
 -   [RNBD Data Sheet](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)
--   AVR128DA48 Produc Page \([AVR128DA48](https://www.microchip.com/en-us/product/AVR128DA48)\)
+-   AVR128DA48 Product Page \([AVR128DA48](https://www.microchip.com/en-us/product/AVR128DA48)\)
 -   RN Data Sheet \([RN4870/1](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)\)
 
 -   RN User Guide\([RN4870/1](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-User-Guide-DS50002466C.pdf)\)
@@ -92,12 +92,12 @@ Refer to the /images folder for source files & max resolution.
 
 # Software Prerequisite<a name="software-prerequisite"></a>
 
-To install the MPLAB® Code Configurator Plugin:
+To install the MPLAB® Code Configurator Plug-in:
 
-1.  Open the MPLAB Code Configurator page: [https://www.microchip.com/mcc](https://www.microchip.com/mcc)
-2.  In MPLAB X IDE, select Plugins from the Tools menu.
-3.  Select the Available Plugins tab.
-4.  Check the box for the MPLAB® Code Configurator v3, and click on Install.
+1.  Open the MPLAB® Code Configurator page: [https://www.microchip.com/mcc](https://www.microchip.com/mcc)
+2.  In MPLAB X IDE, select **Plugins** from the Tools menu.
+3.  Select the **Available Plugins** tab.
+4.  Check the box for the MPLAB® Code Configurator v3, and click **Install**.
 
 # Project Setup<a name="project-setup"></a>
 
@@ -107,15 +107,15 @@ To install the MPLAB® Code Configurator Plugin:
 
     ![](images/GUID-7D237BEA-C905-46FA-B1BC-A90CC2F8A2AA-low.png)
 
-2.  The Process described below is reflective of the Validation Hardware used with Microchip Bluetooth Data Mpbile App. Microcontrollers used for reference are the PIC18F47Q10 8-bit devices.
-3.  Open MCC by clicking Tools → Embedded → MPLAB® Code Configurator OR click on the MCC icon. ![](GUID-359085BA-D8D7-47F8-AF8D-750837A36071-low.png)
+2.  The Validation Hardware used with Microchip Bluetooth Data Mobile App is shown in the process below. AVR128DA48 8-bit devices are used for reference.
+3.  Open MCC by clicking Tools → Embedded → MPLAB® Code Configurator OR click the MCC icon. ![](GUID-359085BA-D8D7-47F8-AF8D-750837A36071-low.png)
 
     or
 
     ![](images/GUID-5ADA889B-5F93-48F2-B5EF-4EE824D9DEA5-low.png)
 
-4.  If MCC is not available; it is required to be installed. Navigate to Tools→ Plugins. Under Available Plugins select MPLAB® Code Configurator, ensure the checkbox is selected and press Install. Once this installation is completed, MCC will be available.![](GUID-FF1D230A-1359-45DE-9631-F96EA45455EE-low.png)
-5.  On launching MCC click on Content Manager button.
+4.  If MCC is not available; it is required to be installed. Navigate to Tools → Plugins. Under Available Plugins select MPLAB® Code Configurator, ensure the checkbox is selected and press **Install**. Once the installation is completed, MCC will be available.![](GUID-FF1D230A-1359-45DE-9631-F96EA45455EE-low.png)
+5.  On launching MCC click on **Content Manager** button.
 
     |WARNING|
     |-------|
@@ -144,7 +144,7 @@ To install the MPLAB® Code Configurator Plugin:
 
         <br />
 
-    3.  Click on Apply Button to finish the Library and Driver Configurations:
+    3.  Click the **Apply** Button to finish the Library and Driver Configurations:
 
         <br />
 
@@ -152,7 +152,7 @@ To install the MPLAB® Code Configurator Plugin:
 
         <br />
 
-6.  From the In the Device Resources panel under Libraries dropdown select: rnbd-rn487x BLE Module.
+6.  From the **Device Resources** panel under Libraries drop down list, select: rnbd-rn487x BLE Module.
 
     <br />
 
@@ -184,7 +184,7 @@ To install the MPLAB® Code Configurator Plugin:
 
     <br />
 
-7.  The Notifications \[MCC\] tab will appear after library addition to describe required actions. These reflect the need for Reset Pin connected to the Module to be assigned to a pin this is required by the library. Select and configure dependent UART instance under Dependency Selector
+7.  The **Notifications \[MCC\]** tab will appear after the library addition to describe required actions. The library requires the Reset Pin to be connected to the Module, which needs to be assigned to a pin. Select and configure the dependent UART instance under Dependency Selector
 
     ![](images/GUID-B93C6167-5693-4253-97A7-E08BE3AAACAC-low.png)
 
@@ -200,7 +200,7 @@ To install the MPLAB® Code Configurator Plugin:
 
             <br />
 
-            **Note:**Any one of the Examples can only be<br /> selected with is common for both RNBD/RN487x
+            **Note:** Any one of the Examples can only be<br /> selected with is common for both RNBD/RN487x
 
 9.  Clock Settings:
     -   From the Project Resource panel under System select Clock Control
@@ -211,7 +211,7 @@ To install the MPLAB® Code Configurator Plugin:
 
         <br />
 
-    -   Set Internal Oscillator Frequency to 20 MHz system clock, Prescaler<br /> Enable option should be Enabled and Prescaler Divison should be set<br /> to 2x.
+    -   Set Internal Oscillator Frequency to 20 MHz system clock, Prescaler **Enable** option must be toggled ON and the **Prescaler Divison** must be set to **2x**.
 
         <br />
 
@@ -236,7 +236,7 @@ To install the MPLAB® Code Configurator Plugin:
             <br />
 
 11. Global Interrupt Settings:
-    -   Click on Interrupt Manager under System settings
+    -   Click **Interrupt Manager** under the System settings
 
         <br />
 
@@ -253,9 +253,9 @@ To install the MPLAB® Code Configurator Plugin:
 
 <br />
 
-# RNBD451 Set Up & Running Example Application<a name="rnbd451-set-up-&-running-example-application"></a>
+# RNBD451 Set Up and Running Example Application<a name="rnbd451-set-up-and-running-example-application"></a>
 
-This Topic explains us briefly regarding the RNBD451 MPLAB X-IDE Project Setup, Code<br /> Generation and Running the Basic Data Exchange & Transparent UART Application with<br /> AVR128DA48 Device.
+This topic briefly explains the RNBD451 MPLAB X-IDE Project Setup, Code Generation, Running the Basic Data Exchange and Transparent UART Application with the AVR128DA48 Device.
 
 ## RNBD Basic Data Exchange PIN Settings<a name="rnbd-basic-data-exchange-pin-settings"></a>
 
@@ -269,9 +269,11 @@ This Topic explains us briefly regarding the RNBD451 MPLAB X-IDE Project Setup, 
 
     <br />
 
-    Set **Device Selection** to **RNBD** as shown in below<br /> image
+-   AVR128DA48 MCC Configuration - Basic Data Exchange Example
 
-    Make sure **Sample Example** Toggle button was<br /> **Enabled**
+    Set **Device Selection** to **RNBD** as shown in image below
+
+    Make sure **Sample Example** toggle button was **Enabled**
 
     Expand **Reference Examples** and Select **Basic Data Exchange**
 
@@ -288,8 +290,8 @@ This Topic explains us briefly regarding the RNBD451 MPLAB X-IDE Project Setup, 
 
 -   Basic Data Exchange Application uses only one instance USART0 for data transfer
 -   **Important:**
-    -   USART0 RxD/TxD **Uncheck** Start High and Pull-up checkboxes.
-    -   Change Rx/Tx ISC \(Input/Sense configuration\) from Interrupt Disabled but input buffer enabled to **Sense Both Edges** as shown below.
+    -   USART0 RxD and TxD **Uncheck** Start High and Pull-Up checkboxes.
+    -   Change Rx and Tx ISC \(Input/Sense configuration\) from Interrupt Disabled but input buffer enabled to **Sense Both Edges** as shown below.
 
         <br />
 
@@ -314,11 +316,11 @@ Configuration for AVR Basic Data Exchange was completed.
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example
 
-    Set **Device Selection** to **RNBD** as shown<br /> in below image
+    Set **Device Selection** to **RNBD** as shown in image below
 
-    Make sure **Sample Example** Toggle button was<br /> **Enabled**
+    Make sure **Sample Example** is enabled
 
-    Expand **Reference Examples** and Select<br /> **Transparent UART application**
+    Expand **Reference Examples** and Select **Transparent UART application**
 
     <br />
 
@@ -334,7 +336,7 @@ Configuration for AVR Basic Data Exchange was completed.
 
     **Note:**
 
-    -   Transparent UART Application uses two instance USART0 & USART1<br /> for data transfer
+    -   Transparent UART application uses two instances, USART0 and USART1 for data transfer
 
     -   Make sure Global Interrupt and USART Module Interrupt Driven was<br /> enabled for both USART0 & USART1.
 
@@ -360,7 +362,7 @@ Configuration for AVR Transparent UART was completed.
 
 ## RNBD GPIO Based Connection Setup<a name="rnbd-gpio-based-connection-setup"></a>
 
-The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins which can be used<br /> to indicate GPIO based connection status. This feature can be useful in the scenario<br /> were the host MCU can verify the BT connection status by monitoring the status<br /> indication pins other than monitoring the connect message in the serial UART prints.
+The RNBD451 device can use BT Status indication 1 and BT Status indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the Host MCU can verify the BT connection status, by monitoring the status indication pins.
 
 **Ble Status Indication Pin Table:**
 
@@ -407,7 +409,7 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
     <br />
 
-    By Default Start High, Pullup, checks will be selected for Status Indication<br /> Pin 1 & 2
+    By Default Start High, Pull-Up, checks will be selected for Status Indication Pin 1 and 2
 
     <br />
 
@@ -415,7 +417,7 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
     <br />
 
-    **Uncheck** the Start High, Pullup checks as shown in the below<br /> Picture
+    **Uncheck** the Start High, Pull-Up checks as shown in the below<br /> picture
 
     Make sure Status Ind1 & Status Ind2 pins are configured with Sense Both<br /> Edges as shown below
 
@@ -465,7 +467,7 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
 5.  Connect the development board of your choice and connect the RNBD to the proper slot\(\) as shown below.
 
-    **Note:** Connect RNBD Click to **Slot 1** as shown in below image
+    **Note:** Connect RNBD Click to **Slot 1** as shown in the image below:
 
     <br />
 
@@ -473,7 +475,7 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
     <br />
 
-    **Important:** Slot was decided based on the UART Instances which was configured for this example application \(**PIN Mapping between MCU & RNBD Click**\).
+    **Important:** The slot was decided based on the UART Instances which were configured for this example \(**PIN Mapping between MCU and RNBD Click**\).
 
 6.  Build the Generated Project:
 
@@ -491,12 +493,12 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
 **Basic Data Exchange:**
 
-|This example shows how an MCU can be programmed to transmit data<br /> to a smart phone over BLE. Here the MCU device will send Periodic<br /> Transmission of a single character when **STREAM\_OPEN** is<br /> processed through the Message Handler. This indicates to the MCU<br /> & RNBD Module that the application is in a DATA STREAMING mode<br /> of operation; and can expect to hear data over the BLE<br /> connection.\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT<br /> \(10000\)\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)Are<br /> used in the example can be found \#defined at the top of<br /> rnbd\_example.c.|
+This example shows how a MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU and RNBD Module that the application is in a DATA STREAMING mode of operation and can expect to hear data over the BLE connection.<br /><br />\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\) are used in the example can be found \#defined at the top of<br /> rnbd\_example.c.|
 
 ![](images/GUID-0C803050-62C5-4E5F-BA14-619E48B5916E-low.png)
 
-1.  Download and Install Phone Application for demonstration:
-    1.  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
+1.  Download and Install the Phone Application for demonstration:
+    1.  **Microchip Bluetooth Data** by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
     ![](images/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](images/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
@@ -507,11 +509,11 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
     <br />
 
-    Click on the 'BLE Smart' Sub Apps as shown below:
+    Click on the **BLE Smart** Sub Apps as shown below:
 
     ![](images/GUID-E19A7964-8190-4C53-8BBA-6370A19C9829-low.png)
 
-3.  The Application will automatically scan the area for Bluetooth devices within a range. Look for "RNBD" device under scanned list.
+3.  The Application scans the area for Bluetooth devices within a range. Look for "RNBD" devices under the scanned list.
 
     <br />
 
@@ -531,11 +533,11 @@ The RNBD451 device has BT Status indication 1 and BT Status indication 2 pins wh
 
     ![](images/GUID-AC320004-8543-404F-806A-4C5E70E09E3B-low.png)
 
-6.  Click on Microchip Data Service Option and Select the Microchip Data Characteristic and Write Notify Indication to receive the data in Mobile App.
+6.  Click on **Microchip Data Service** Option, select the **Microchip Data Characteristic** and Write Notify Indication to receive the data in Mobile App.
 
     ![](images/GUID-65CA4B07-2C54-4799-A9AE-826FD83B676D-low.png)
 
-7.  Select "Listen for notifications" on the application.
+7.  Select **Listen for notifications** on the application.
     -   It may be required to "enable notification" access to the app on the<br /> phone.
 
         Data will begin to Send at a Periodic Rate to the device.
@@ -566,7 +568,7 @@ This is the END of the Basic Data Exchange Example
 
 |Transparent Serial:|
 |-------------------|
-|<br /> This example will demostrat data transmitted from a PC serial<br /> terminal is written to a smart phone app and vice versa. The MCU<br /> device will act as a bridge, and pass data between RNBD Module â†?<br /> MCU â†’ Serial Terminal.<br /> This action will occur when STREAM\_OPEN is processed<br /> through the Message Handler. For this example, data typed into<br /> the Serial Terminal will appear on the BLE Phone Application,<br /> and Data sent from the Application will appear on the Serial<br /> Terminal.<br />|
+|<br /> This example shows how the data transmitted from a PC serial terminal is written to a smart phone app and the vice versa. The MCU acts as a bridge while passing data between RNDB Module <--- MCU ---> Serial Terminal.<br /><br /> This action will occur when STREAM\_OPEN is processed through the Message Handler. For this example, data typed into the Serial Terminal will appear on the BLE Phone Application,and Data sent from the Application will appear on the Serial Terminal.<br />|
 
 <br />
 
@@ -584,7 +586,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-    After Installing open the MBD App and Click on **BLE UART** Sub Apps:
+    After the installation is complete, open the MDB APP and click on **BLE UART** Sub Apps:
 
     <br />
 
@@ -592,7 +594,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-3.  On Selecting PIC32CXBZ scan for available devices to connect. The Application will automatically scan the area for Bluetooth devices within a range. By default, the device should appear as "RNBD451\_xxxx"
+3.  Select **PIC32CXBZ** to scan for available devices to connect. The application automatically scans the area for Bluetooth devices within a range. By default, the devices appear as "RNBD451_xxxx"
 
     <br />
 
@@ -600,7 +602,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-4.  For Transparent Serial only: Open a "Serial Terminal" Program such as Tera Term, Realterm, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
+4.  For Transparent Serial only: Open a "Serial Terminal" program such as Tera Term, Realterm, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
 
     <br />
 
@@ -630,7 +632,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-6.  Enter the text to be transferred from mobile to RNB45x device and click send button
+6.  Enter the text to be transferred from mobile to RNB45x device and click the **Send** button
 
     <br />
 
@@ -665,7 +667,7 @@ This is the END of the Transparent UART Example
 
 # RN487x Set Up and Running Example<a name="rn487x-set-up-and-running-example"></a>
 
-This Topic explains us briefly regarding the RN487x MPLAB X-IDE Project Setup, Code<br /> Generation and Running the Basic Data Exchange & Transparent UART Application with<br /> AVR128DA48 Device.
+This topic briefly explains the RN487x MPLAB X-IDE Project Setup, Code Generation, Running the Basic Data Exchange and Transparent UART Application with the AVR128DA48 Device.
 
 ## RN487x Basic Data Exchange PIN Settings<a name="rn487x-basic-data-exchange-pin-settings"></a>
 
@@ -679,9 +681,8 @@ This Topic explains us briefly regarding the RN487x MPLAB X-IDE Project Setup, C
 
     <br />
 
-    Set **Device Selection** to **RN487x** as shown in below<br /> image
-
-    Make sure **Sample Example** Toggle button was<br /> **Enabled**
+    Set **Device Selection** to **RN487x** as shown in below image
+    <br /><br />Make sure **Sample Example** Toggle button was **Enabled**
 
     Expand **Reference Examples** and Select **Basic Data Exchange**
 
@@ -698,8 +699,8 @@ This Topic explains us briefly regarding the RN487x MPLAB X-IDE Project Setup, C
 
 -   Basic Data Exchange Application uses only one instance of **USART0** for data transfer
 -   **Important:**
-    -   USART0 RxD/TxD **Uncheck** Start High and Pull-up checkboxes.
-    -   Change Rx/Tx ISC \(Input/Sense configuration\) from Interrupt Disabled but input buffer enabled to **Sense Both Edges** as shown below.
+    -   USART0 RxD and TxD **Uncheck** Start High and Pull-up checkboxes.
+    -   Change Rx and Tx ISC \(Input/Sense configuration\) from Interrupt Disabled but input buffer enabled to **Sense Both Edges** as shown below.
 
         <br />
 
@@ -723,11 +724,11 @@ Configuration for AVR Basic Data Exchange was completed.
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example
 
-    Set **Device Selection** to **RN487x** as<br /> shown in below image
+    Set **Device Selection** to **RN487x** as shown in below image
 
-    Make sure **Sample Example** Toggle button was<br /> **Enabled**
+    Make sure **Sample Example** Toggle button was **Enabled**
 
-    Expand **Reference Examples** and Select<br /> **Transparent UART application**
+    Expand **Reference Examples** and Select **Transparent UART application**
 
     <br />
 
@@ -746,9 +747,9 @@ Configuration for AVR Basic Data Exchange was completed.
 
 **Note:**
 
--   Transparent UART Application uses two instance USART0 & USART1 for data<br /> transfer
+-   Transparent UART Application uses USART0 and USART1 for data transfer
 
--   Make sure Global Interrupt and USART Module Interrupt Driven was enabled for<br /> both USART0 & USART1.
+-   Make sure Global Interrupt and USART Module Interrupt Driven was enabled for both **USART0 and USART1**.
 
     <br />
 
@@ -756,7 +757,7 @@ Configuration for AVR Basic Data Exchange was completed.
 
     <br />
 
-    **Important:**Change RxD/TxD ISC \(Input/Sense configuration\) from<br /> Interrupt Disabled but input buffer enabled to Sense Both Edges as shown<br /> above.
+    **Important:** Change RxD and TxD ISC \(Input/Sense configuration\) from **Interrupt Disabled but input buffer enabled** to **Sense Both Edges** as shown above.
 
     <br />
 
@@ -765,7 +766,7 @@ Configuration for AVR Basic Data Exchange was completed.
     <br />
 
 
-Configuration for AVR Transparent UART was completed click.
+Configuration for AVR Transparent UART was completed.
 
 
 ## RN487x Code Generation & Compilation<a name="rn487x-code-generation-&-compilation"></a>
@@ -812,7 +813,7 @@ Configuration for AVR Transparent UART was completed click.
 
     <br />
 
-    **Important:** Slot was decided based on the UART Instances which was configured for this example application \(**PIN Mapping between MCU & RN4871 Click**\).
+    **Important:** The slot was decided based on the UART Instances which were configured for this example (**PIN Mapping between MCU and RN4871**).
 
 6.  Build the Generated Project:
 
@@ -830,12 +831,14 @@ Configuration for AVR Transparent UART was completed click.
 
 **Basic Data Exchange:**
 
-|This example shows how an MCU can be programmed to transmit data<br /> to a smart phone over BLE. Here the MCU device will send Periodic<br /> Transmission of a single character when **STREAM\_OPEN** is<br /> processed through the Message Handler. This indicates to the MCU<br /> & RN487x Module that the application is in a DATA STREAMING mode<br /> of operation; and can expect to hear data over the BLE<br /> connection.\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT<br /> \(10000\)\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\)Are<br /> used in the example can be found \#defined at the top of<br /> rnbd\_example.c.|
+This example shows how a MCU can be programmed to transmit data to a smart phone over BLE. Here the MCU device will send Periodic Transmission of a single character when **STREAM\_OPEN** is processed through the Message Handler. This indicates to the MCU and RN487x Module that the application is in a DATA STREAMING mode<br /> of operation; and can expect to hear data over the BLE connection.
+
+\#define DEMO\_PERIODIC\_TRANSMIT\_COUNT\(10000\)\#define DEMO\_PERIODIC\_CHARACTER \(‘1’\) are used in the example can be found \#defined at the top of rnbd\_example.c.
 
 ![](images/GUID-0C803050-62C5-4E5F-BA14-619E48B5916E-low.png)
 
 1.  Download and Install Phone Application for demonstration:
-    1.  **Microchip Bluetooth Data**by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
+    1.  **Microchip Bluetooth Data** by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play Store](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the Phone Application
 
     ![](images/GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)![](GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
@@ -846,11 +849,11 @@ Configuration for AVR Transparent UART was completed click.
 
     <br />
 
-    Click on the 'BLE Smart' Sub Apps as shown below:
+    Click the **BLE Smart** Sub Apps as shown below:
 
     ![](images/GUID-E19A7964-8190-4C53-8BBA-6370A19C9829-low.png)
 
-3.  The Application will automatically scan the area for Bluetooth devices within a range. Look for "RN487x" device under scanned list.
+3.  The Application scans the area for Bluetooth devices within a range. Look for "RN487x" devices under the scanned list.
 
     <br />
 
@@ -866,7 +869,7 @@ Configuration for AVR Transparent UART was completed click.
 
     <br />
 
-5.  Once connected Microchip Bluetooth App discovers all the services and characteristics supported by the RN487x device as shown in the following figure.
+5.  Once connected, the Microchip Bluetooth App discovers all the services and characteristics supported by the RN487x device, as shown in the following figure.
 
     <br />
 
@@ -874,7 +877,7 @@ Configuration for AVR Transparent UART was completed click.
 
     <br />
 
-6.  Click on Microchip Data Service Option and Select the Microchip Data Characteristic and Write Notify Indication to receive the data in Mobile App.
+6.  Click on **Microchip Data Service** Option, select **Microchip Data Characteristic** and Write Notify Indication to receive the data in the Mobile App.
 
     <br />
 
@@ -882,7 +885,7 @@ Configuration for AVR Transparent UART was completed click.
 
     <br />
 
-7.  Select "Listen for notifications" on the application.
+7.  Select **Listen for notifications** on the application.
     -   It may be required to "enable notification" access to the app on the<br /> phone.
 
         Data will begin to Send at a Periodic Rate to the device.
@@ -904,129 +907,6 @@ Configuration for AVR Transparent UART was completed click.
 
 This is the END of the Basic Data Exchange Example
 
-# RN487x Example2: Running Transparent UART Example Application
-
-<br />
-
-![](GUID-8E99A785-AE04-48F7-BBD4-7259DC3B5F9B-low.png)
-
-<br />
-
-<br />
-
-|Transparent Serial:|
-|-------------------|
-|<br /> This example will demostrat data transmitted from a PC serial<br /> terminal is written to a smart phone app and vice versa. The MCU<br /> device will act as a bridge, and pass data between RNBD Module â†?<br /> MCU â†’ Serial Terminal.<br /> This action will occur when STREAM\_OPEN is processed<br /> through the Message Handler. For this example, data typed into<br /> the Serial Terminal will appear on the BLE Phone Application,<br /> and Data sent from the Application will appear on the Serial<br /> Terminal.<br />|
-
-<br />
-
-1.  Download and Install Phone Application for demonstration:
-    -   **Microchip Bluetooth Data** by **Microchip** from the [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or from [Google Play](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
-2.  Launch the Phone Application
-
-    ![](GUID-10887333-0442-467E-B79B-6A17DB835DB2-low.png)
-
-    ![](GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
-
-    <br />
-
-    ![](GUID-8A9EE9CE-AA92-4648-8364-09987F2E0526-low.png)
-
-    <br />
-
-    After Installing open the MBD App and Click on **BLE UART** Sub Apps:
-
-    <br />
-
-    ![](GUID-D647FF96-CA12-4FA0-A3AA-29C6D6C3DF9D-low.png)
-
-    <br />
-
-3.  On Selecting BM70 scan for available devices to connect.
-
-    <br />
-
-    ![](GUID-6B7B0F61-A3A7-478C-A253-06E561E1313F-low.png)
-
-    <br />
-
-    Click on the below Scan image to scan the Nearby "RN487x-xxxx"
-
-    <br />
-
-    ![](GUID-C7AB4C05-260C-4C69-AF6D-298B9E02F302-low.png)
-
-    <br />
-
-    The Application will automatically scan the area for Bluetooth devices within<br /> a range. By default, the device should appear as "RN487x-xxxx"
-
-    <br />
-
-    ![](GUID-C36CEB36-58F8-4DAD-8800-358F70E56B66-low.png)
-
-    <br />
-
-4.  For Transparent Serial only: Open a "Serial Terminal" Program such as Tera Term, Realterm, PuTTY, Serial; or similar. Baud Rate will be configured as: 115200
-
-    <br />
-
-    ![](GUID-B18B65D8-9AA3-478A-A674-DEB871E086CA-low.png)
-
-    <br />
-
-    <br />
-
-    ![](GUID-BC559EA4-E40C-4332-9EF3-4BA8F919AFE6-low.png)
-
-    <br />
-
-5.  Once Connected with RN487x-xxxx click on Transfer data to device as shown below to initiate the data transfer.
-
-    <br />
-
-    ![](GUID-B3297905-2011-452F-8141-887853ECF6AD-low.png)
-
-    <br />
-
-    - Check Serial Terminal for the status of the connection.
-
-    <br />
-
-    ![](GUID-DF2150F8-89DC-4876-B351-D59A58E34272-low.png)
-
-    <br />
-
-6.  Enter the text to be transferred from mobile to RN487x-xxxx device and click send button
-
-    <br />
-
-    ![](GUID-B8693063-53D6-4080-AD8C-3906E2698F6C-low.png)
-
-    <br />
-
-    - The data will be received at the RN487x-xxxx side and will be displayed in<br /> serial terminal of RNBD45x
-
-    <br />
-
-    ![](GUID-E0106617-7CA8-4508-AE5A-278D8E8B737B-low.png)
-
-    <br />
-
-7.  Type any data on the serial terminal of the RN487x-xxxx to send to the Microchip Bluetooth Data App, which is received and printed on the receive view of the Microchip Bluetooth App.
-
-    <br />
-
-    ![](GUID-CEC4E31B-D080-4A65-8350-81D62D130FC9-low.png)
-
-    <br />
-
-    <br />
-
-    ![](GUID-E985EFE1-6B23-4A76-86DE-E349AF41D0F1-low.png)
-
-    <br />
-
-
 ## RN487x Example2: Running Transparent UART Example Application<a name="rn487x-example2:-running-transparent-uart-example-application"></a>
 
 <br />
@@ -1039,7 +919,7 @@ This is the END of the Basic Data Exchange Example
 
 |Transparent Serial:|
 |-------------------|
-|<br /> This example will demostrat data transmitted from a PC serial<br /> terminal is written to a smart phone app and vice versa. The MCU<br /> device will act as a bridge, and pass data between RNBD Module â†?<br /> MCU â†’ Serial Terminal.<br /> This action will occur when STREAM\_OPEN is processed<br /> through the Message Handler. For this example, data typed into<br /> the Serial Terminal will appear on the BLE Phone Application,<br /> and Data sent from the Application will appear on the Serial<br /> Terminal.<br />|
+|<br /> This example shows how the data transmitted from a PC serial terminal is written to a smart phone app and the vice versa. The MCU acts as a bridge while passing data between RNDB Module <--- MCU ---> Serial Terminal.<br /><br /> This action will occur when STREAM\_OPEN is processed through the Message Handler. For this example, data typed into the Serial Terminal will appear on the BLE Phone Application,and Data sent from the Application will appear on the Serial Terminal.<br />|
 
 <br />
 
@@ -1057,7 +937,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-    After Installing open the MBD App and Click on **BLE UART** Sub Apps:
+    After the installation is complete, open the MBD and click **BLE UART** Sub Apps:
 
     <br />
 
@@ -1103,7 +983,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-5.  Once Connected with RN487x-xxxx click on Transfer data to device as shown below to initiate the data transfer.
+5.  Once Connected with RN487x-xxxx click **Transfer data to device** as shown below to initiate the data transfer.
 
     <br />
 
@@ -1119,7 +999,7 @@ This is the END of the Basic Data Exchange Example
 
     <br />
 
-6.  Enter the text to be transferred from mobile to RN487x-xxxx device and click send button
+6.  Enter the text to be transferred from mobile to RN487x-xxxx device and click **Send**
 
     <br />
 
