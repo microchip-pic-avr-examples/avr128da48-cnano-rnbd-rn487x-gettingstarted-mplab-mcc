@@ -27,7 +27,7 @@
 
 # Introduction<a name="introduction"></a>
 
-The MPLAB® Code Configurator (MCC) RNBD\(TBD\)/[RN487x](https://www.microchip.com/wwwproducts/en/RN4870) BLE Modules Library allows to promptly configure the C code-generated software driver, based on the user’s selected API features available in the MCC Library. The Generated Driver code can support the BLE module using a AVR device
+The MPLAB® Code Configurator (MCC) [RNBD](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)/[RN487x](https://www.microchip.com/wwwproducts/en/RN4870) BLE Modules Library allows to promptly configure the C code-generated software driver, based on the user’s selected API features available in the MCC Library. The Generated Driver code can support the BLE module using a AVR device
 
 The library module uses a Graphic User Interface (GUI) provided by the MCC, used to set the configuration, and the custom configurations of the protocol. The Customized C code is generated within the MPLAB X project, in a folder named "MCC Generated Files".
 
@@ -64,8 +64,8 @@ Refer to the /images folder for source files & max resolution.
 # Related Documentation<a name="related-documentation"></a>
 
 -   Microchip Bluetooth \([BLE](https://www.microchip.com/design-centers/wireless-connectivity/bluetooth)\)
--   [RNBD User Guide\(TBD\)](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)
--   [RNBD Data Sheet](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)
+-   RNBD User Guide \([RNBD451](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)\)
+-   RNBD Data Sheet \([RNBD451 DS](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)\)
 -   AVR128DA48 Product Page \([AVR128DA48](https://www.microchip.com/en-us/product/AVR128DA48)\)
 -   RN Data Sheet \([RN4870/1](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)\)
 
@@ -84,8 +84,8 @@ Refer to the /images folder for source files & max resolution.
 
 -   AVR128DA48 Curiosity Nano Board \([DM164151](https://www.microchip.com/en-us/development-tool/DM164151)\)
 -   Curiosity Nano Base Board \([AC164162](https://www.microchip.com/en-us/development-tool/AC164162)\)
--   RNBD User Guide \(TBD\)
--   RNBD Device Data-Sheet \(TBD\)
+-   RNBD User Guide \([RNBD451](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)\)
+-   RNBD Device Data-Sheet \([RNBD451 DS](http://mchpweb:4576/SpecIndex_FileAttach/TPT_20227216811993/70005514A.pdf)\)
 -   [RN Data Sheet](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-Data-Sheet-DS50002489D.pdf)
 
 -   [RN User Guide](http://ww1.microchip.com/downloads/en/DeviceDoc/RN4870-71-Bluetooth-Low-Energy-Module-User-Guide-DS50002466C.pdf)
