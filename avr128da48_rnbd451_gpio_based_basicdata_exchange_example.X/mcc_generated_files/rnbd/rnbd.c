@@ -10,7 +10,7 @@
  * @version RNBD Driver Version  2.0.0
 */
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -32,14 +32,20 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 #include "rnbd.h"
 #include "rnbd_interface.h"
 
+/* This value depends upon the System Clock Frequency, Baudrate value and Error percentage of Baudrate*/
+#define RESPONSE_TIMEOUT 65
+
 /**
  * @def STATUS_MESSAGE_DELIMITER
- * This macro provide a definition of the RNBD devices PRE/POST status message delimiter.
+ * This Variable provide a definition of the RNBD devices PRE/POST status message delimiter.
  */
-#define RNBD_STATUS_MESSAGE_DELIMITER  	      ('%')
+char RNBD_STATUS_MESSAGE_DELIMITER = '%';
+
+bool skip_Delimter = false;
 
 uint8_t RNBD_cmdBuf[64];                                 /**< Command TX Buffer */
 
@@ -51,6 +57,8 @@ static char *RNBD_pHead;                                 /**< Pointer to the Hea
 static uint8_t RNBD_peek = 0;                            /**< Recieved Non-Status Message Data */
 static bool RNBD_dataReady = false;                      /**< Flag which indicates whether Non-Status Message Data is ready */
 
+uint8_t resp[100];
+
 /**
  * @ingroup rnbd
  * @brief This function filters status messages from RNBD data.
@@ -60,7 +68,7 @@ static bool RNBD_dataReady = false;                      /**< Flag which indicat
  */
 static bool RNBD_DataFilter(void);
 
-bool RNBD_Initialize(void)
+bool RNBD_Init(void)
 {
     //Enter reset
     RNBD.ResetModule(true);
@@ -72,7 +80,7 @@ bool RNBD_Initialize(void)
     //Wait while RNBD is booting up
     RNBD.DelayMs(RNBD_STARTUP_DELAY);
 
-    //Remove unread data sent by RN487x, if any
+    //Remove unread data sent by RNBD, if any
     while (RNBD.DataReady())
     {
         RNBD.Read();
@@ -81,44 +89,76 @@ bool RNBD_Initialize(void)
     return true;
 }
 
-void RNBD_CmdSend(const uint8_t *cmd, uint8_t cmdLen)
+void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen)
 {
     uint8_t index = 0;
-
-    while (index < cmdLen)
-    {
+	
+	do{
         if (RNBD.TransmitReady())
         {
             RNBD.Write(cmd[index]);
-            index++;
+            index++; 
         }
     }
+    while(index < cmdLen);
+       
+    while(!RNBD.TransmitReady());
 }
 
-uint8_t RNBD_CmdGet(const char *getCmd, uint8_t getCmdLen, char *getCmdResp)
+uint8_t RNBD_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen)
 {
-    uint8_t index = 0;
+    uint8_t index = 0, ResponseTime=0;
 
-    RNBD_CmdSend((uint8_t *) getCmd, getCmdLen);
+    RNBD_SendCmd(getCmd, getCmdLen);
+	
+	//Wait for the response time
+    while(!RNBD.DataReady() && ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
 
     do
     {
-        getCmdResp[index++] = RNBD.Read();
+        //Read Ready data 
+        if(RNBD.DataReady())
+        {
+            resp[index++]=RNBD.Read();
+        }
     }
-    while (getCmdResp[index - 1] != '\n');
+    while (resp[index - 1U] != '>');
 
     return index;
 }
 
-bool RNBD_MsgRead(const uint8_t *expectedMsg, uint8_t msgLen)
+bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen)
 {
-    uint8_t index;
-    uint8_t resp;
-
-    for (index = 0; index < msgLen; index++)
+    unsigned int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
+	
+	//Wait for the response time
+    while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
     {
-        resp = RNBD.Read();
-        if (resp != expectedMsg[index])
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
+	
+	//Read Ready data 
+    while(RNBD.DataReady())
+    {
+        resp[ResponseRead]=RNBD.Read();
+        ResponseRead++;
+    }
+	
+	//Comparing length of response expected
+    if (ResponseRead != msgLen)
+    {
+        return false;
+    }
+	
+	//Comparing the Response with expected result
+    for(ResponseCheck=0;ResponseCheck<ResponseRead;ResponseCheck++)
+    {
+        if (resp[ResponseCheck] != expectedMsg[ResponseCheck])
         {
             return false;
         }
@@ -128,27 +168,36 @@ bool RNBD_MsgRead(const uint8_t *expectedMsg, uint8_t msgLen)
 }
 
 
-bool RNBD_DefaultResponseRead(void)
+bool RNBD_ReadDefaultResponse(void)
 {
-    uint8_t resp[3];
+    uint8_t DefaultResponse[30];
     bool status = false;
 
-    resp[0] = RNBD.Read();
-    resp[1] = RNBD.Read();
-    resp[2] = RNBD.Read();
+    unsigned int ResponseWait=0,DataReadcount=0;
+    while(!RNBD.DataReady() || ResponseWait<=RESPONSE_TIMEOUT)
+    {
+        RNBD.DelayMs(1);
+        ResponseWait++;
+    }
+    
+    while(RNBD.DataReady())
+    {
+        DefaultResponse[DataReadcount]=RNBD.Read();
+        DataReadcount++;
+    }
 
-    switch (resp[0])
+    switch (DefaultResponse[0])
     {
         case 'A':
         {
-            if ((resp[1] == 'O') && (resp[2] == 'K'))
+            if ((DefaultResponse[1] == 'O') && (DefaultResponse[2] == 'K'))
                 status = true;
 
             break;
         }
         case 'E':
         {
-            if ((resp[1] == 'r') && (resp[2] == 'r'))
+            if ((DefaultResponse[1] == 'r') && (DefaultResponse[2] == 'r'))
                 status = false;
 
             break;
@@ -158,79 +207,85 @@ bool RNBD_DefaultResponseRead(void)
             return status;
         }
     }
-
-    /* Read carriage return and line feed comes with response */
-    RNBD.Read();
-    RNBD.Read();
-
-    //Read CMD>
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
   
     return status;
 }
 
 
-void RNBD_MsgWait(const char *expectedMsg, uint8_t msgLen)
+bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen)
 {
-    uint8_t index = 0;
-    uint8_t resp;
-
-    do
+    int ResponseRead=0,ResponseTime=0,ResponseCheck=0;
+    
+    //Flush out any read data
+    while (RNBD.DataReady())
     {
-        resp = RNBD.Read();
-
-        if (resp == expectedMsg[index])
+        RNBD.Read();
+    }
+    
+    //Sending Command to UART
+    RNBD_SendCmd(cmdMsg, cmdLen);
+    
+    //Waiting for the response time
+    while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
+    
+    //Read Ready data 
+    while(RNBD.DataReady())
+    {
+        resp[ResponseRead]=RNBD.Read();
+        ResponseRead++;
+    }
+	
+	//Comparing length of response expected
+	if (ResponseRead != responseLen)
+    {
+        return false;
+    }
+    
+    //Comparing the Response with expected result
+    for(ResponseCheck=0;ResponseCheck<ResponseRead;ResponseCheck++)
+    {
+        if (resp[ResponseCheck] != responsemsg[ResponseCheck])
         {
-            index++;
-        }
-        else
-        {
-            index = 0;
-            if (resp == expectedMsg[index])
-            {
-                index++;
-            }
+            return false;
         }
     }
-    while (index < msgLen);
+	
+    return true;
 }
 
-
-bool RNBD_CmdModeEnter(void)
+bool RNBD_EnterCmdMode(void)
 {
-    const uint8_t cmdPrompt[] = {'C', 'M', 'D', '>', ' '};
-
-    RNBD_cmdBuf[0] = '$';
+    const uint8_t cmdModeResponse[] = {'C', 'M', 'D', '>', ' '};
+	
+	RNBD_cmdBuf[0] = '$';
     RNBD_cmdBuf[1] = '$';
     RNBD_cmdBuf[2] = '$';
-
-    RNBD_CmdSend(RNBD_cmdBuf, 3);
-
-    return RNBD_MsgRead(cmdPrompt, sizeof (cmdPrompt));
+        
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 3U, cmdModeResponse, 5U);
 }
 
-bool RNBD_DataModeEnter(void)
+bool RNBD_EnterDataMode(void)
 {
-    const uint8_t cmdPrompt[] = {'E', 'N', 'D', '\r', '\n'};
-
-    RNBD_cmdBuf[0] = '-';
+    const uint8_t dataModeResponse[] = {'E', 'N', 'D', '\r', '\n'};
+	
+	RNBD_cmdBuf[0] = '-';
     RNBD_cmdBuf[1] = '-';
     RNBD_cmdBuf[2] = '-';
     RNBD_cmdBuf[3] = '\r';
     RNBD_cmdBuf[4] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 5);
-
-    return RNBD_MsgRead(cmdPrompt, sizeof (cmdPrompt));
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 5, dataModeResponse, 5U);
 }
 
 uint16_t RNBD_GetGRCommand(void)
 {
-    static char response[4];
+	const uint8_t getGRModeResponse[] = {'1', '0', '0', '0', '\r', '\n', 'C', 'M', 'D', '>', ' '};
+	
+    static uint8_t response[20];
     uint16_t GR_Bitmap_Value=0;
 
     RNBD_cmdBuf[0] = 'g';
@@ -238,22 +293,13 @@ uint16_t RNBD_GetGRCommand(void)
     RNBD_cmdBuf[2] = '\r';
     RNBD_cmdBuf[3] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 4);
-    response[0] = RNBD.Read();
-    response[1] = RNBD.Read();
-    response[2] = RNBD.Read();
-    response[3] = RNBD.Read();
-
-    // Read carriage return and line feed
-    RNBD.Read();
-    RNBD.Read();
-
-    // Read CMD>
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
+    RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf,4,getGRModeResponse,11);
+	
+    response[0] =resp[0];
+    response[1] =resp[1];
+    response[2] =resp[2];
+    response[3] =resp[3];
+	
     GR_Bitmap_Value = (int)strtol(response, NULL, 16);
     
 
@@ -261,9 +307,10 @@ uint16_t RNBD_GetGRCommand(void)
 }
 
 
-bool RNBD_NameSet(const char *name, uint8_t nameLen)
+bool RNBD_SetName(const uint8_t *name, uint8_t nameLen)
 {
     uint8_t index;
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
 
     RNBD_cmdBuf[0] = 'S';
     RNBD_cmdBuf[1] = 'N';
@@ -279,29 +326,29 @@ bool RNBD_NameSet(const char *name, uint8_t nameLen)
     RNBD_cmdBuf[index++] = '\r';
     RNBD_cmdBuf[index++] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, nameLen + 5);
-
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, nameLen + 5U, cmdPrompt, 10);
 }
 
-bool RNBD_BaudRateSet(uint8_t baudRate)
+bool RNBD_SetBaudRate(uint8_t baudRate)
 {
+	uint8_t temp = (baudRate >> 4);
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     RNBD_cmdBuf[0] = 'S';
     RNBD_cmdBuf[1] = 'B';
     RNBD_cmdBuf[2] = ',';
-    RNBD_cmdBuf[3] = ((uint8_t)(baudRate >> 4)) & 0x0F;
-    RNBD_cmdBuf[4] = (baudRate & 0x0F);
+    RNBD_cmdBuf[3] = NIBBLE2ASCII(temp);
+	temp = (baudRate & 0x0F);
+    RNBD_cmdBuf[4] = NIBBLE2ASCII(temp);
     RNBD_cmdBuf[5] = '\r';
     RNBD_cmdBuf[6] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 7);
-
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 7U, cmdPrompt, 10);
 }
 
 
-bool RNBD_ServiceBitmapSet(uint8_t serviceBitmap)
+bool RNBD_SetServiceBitmap(uint8_t serviceBitmap)
 {
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     uint8_t temp = (serviceBitmap >> 4);
 
     RNBD_cmdBuf[0] = 'S';
@@ -313,14 +360,13 @@ bool RNBD_ServiceBitmapSet(uint8_t serviceBitmap)
     RNBD_cmdBuf[5] = '\r';
     RNBD_cmdBuf[6] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 7);
-
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 7U, cmdPrompt, 10);
 }
 
 
-bool RNBD_FeaturesBitmapSet(uint16_t featuresBitmap)
+bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap)
 {
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     uint8_t temp = (uint8_t) (featuresBitmap >> 12);
 
     RNBD_cmdBuf[0] = 'S';
@@ -340,14 +386,13 @@ bool RNBD_FeaturesBitmapSet(uint16_t featuresBitmap)
     RNBD_cmdBuf[7] = '\r';
     RNBD_cmdBuf[8] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 9);
-
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 9U, cmdPrompt, 10);
 }
 
 
-bool RNBD_IOCapabilitySet(uint8_t ioCapability)
+bool RNBD_SetIOCapability(uint8_t ioCapability)
 {
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
     RNBD_cmdBuf[0] = 'S';
     RNBD_cmdBuf[1] = 'A';
     RNBD_cmdBuf[2] = ',';
@@ -355,15 +400,14 @@ bool RNBD_IOCapabilitySet(uint8_t ioCapability)
     RNBD_cmdBuf[4] = '\r';
     RNBD_cmdBuf[5] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 6);
-
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 6U, cmdPrompt, 10);
 }
 
 
-bool RNBD_PinCodeSet(const char *pinCode, uint8_t pinCodeLen)
+bool RNBD_SetPinCode(const uint8_t *pinCode, uint8_t pinCodeLen)
 {
     uint8_t index;
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
 
     RNBD_cmdBuf[0] = 'S';
     RNBD_cmdBuf[1] = 'P';
@@ -377,13 +421,13 @@ bool RNBD_PinCodeSet(const char *pinCode, uint8_t pinCodeLen)
     RNBD_cmdBuf[index++] = '\r';
     RNBD_cmdBuf[index++] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, index);
-
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, index, cmdPrompt, 10);
 }
 
-bool RNBD_StatusMsgDelimiterSet(char preDelimiter, char postDelimiter)
+bool RNBD_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter)
 {
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
+	
     RNBD_cmdBuf[0] = 'S';
     RNBD_cmdBuf[1] = '%';
     RNBD_cmdBuf[2] = ',';
@@ -393,19 +437,14 @@ bool RNBD_StatusMsgDelimiterSet(char preDelimiter, char postDelimiter)
     RNBD_cmdBuf[6] = '\r';
     RNBD_cmdBuf[7] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 8);
-
-    if (RNBD_DefaultResponseRead())
-    {
-        return true;
-    }
-
-    return false;
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 8, cmdPrompt, 10);
 }
 
 
-bool RNBD_OutputsSet(rnbd_gpio_bitmap_t bitMap)
+bool RNBD_SetOutputs(rnbd_gpio_bitmap_t bitMap)
 {
+	const uint8_t cmdPrompt[] = {'A', 'O', 'K', '\r', '\n', 'C', 'M', 'D', '>', ' '};
+	
     char ioHighNibble = '0';
     char ioLowNibble = '0';
     char stateHighNibble = '0';
@@ -444,12 +483,11 @@ bool RNBD_OutputsSet(rnbd_gpio_bitmap_t bitMap)
     RNBD_cmdBuf[8] = '\r';
     RNBD_cmdBuf[9] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 10);
-    return RNBD_DefaultResponseRead();
+    return RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 10U, cmdPrompt, 10U);
 }
 
 
-rnbd_gpio_stateBitMap_t RNBD_InputsValuesGet(rnbd_gpio_ioBitMap_t getGPIOs)
+rnbd_gpio_stateBitMap_t RNBD_GetInputsValues(rnbd_gpio_ioBitMap_t getGPIOs)
 {
     char ioHighNibble = '0';
     char ioLowNibble = '0';
@@ -476,71 +514,80 @@ rnbd_gpio_stateBitMap_t RNBD_InputsValuesGet(rnbd_gpio_ioBitMap_t getGPIOs)
     RNBD_cmdBuf[5] = '\r';
     RNBD_cmdBuf[6] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 7);
-    RNBD_MsgRead(ioValue, sizeof (ioValue));    
+    RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 7, ioValue, sizeof (ioValue));
+    
     ioBitMapValue.gpioStateBitMap = ( (((ioValue[0] - '0') & 0x0F) << 4) | ((ioValue[1] - '0') & 0x0F) );
     return ioBitMapValue;
 }
 
 
-uint8_t * RNBD_RSSIValueGet(void)
+uint8_t * RNBD_GetRSSIValue(void)
 {
-    static uint8_t resp[3];
+    static uint8_t rssiResp[20];
+    unsigned int ResponseRead=0,ResponseTime=0;
 
     RNBD_cmdBuf[0] = 'M';
     RNBD_cmdBuf[1] = '\r';
     RNBD_cmdBuf[2] = '\n';
-
-    RNBD_CmdSend(RNBD_cmdBuf, 3);
-
-    resp[0] = RNBD.Read();
-    resp[1] = RNBD.Read();
-    resp[2] = RNBD.Read();
-
-    // Read carriage return and line feed
-    RNBD.Read();
-    RNBD.Read();
-
-    // Read CMD>
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-    RNBD.Read();
-
-    return resp;
+	
+	RNBD_SendCmd(RNBD_cmdBuf, 3);
+	
+	//Wait for the response time
+    while(!RNBD.DataReady() || ResponseTime<=RESPONSE_TIMEOUT)
+    {
+        RNBD.DelayMs(1);
+        ResponseTime++;
+    }
+	
+	//Read Ready data 
+    while(RNBD.DataReady())
+    {
+        resp[ResponseRead]=RNBD.Read();
+        ResponseRead++;
+    }
+	
+	rssiResp[0]=resp[0];
+	rssiResp[1]=resp[1];
+	rssiResp[2]=resp[2];
+		
+	return rssiResp;
 }
 
 
-bool RNBD_CmdReboot(void)
+bool RNBD_RebootCmd(void)
 {
-    const uint8_t reboot[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
-
-    RNBD_cmdBuf[0] = 'R';
+    bool RebootStatus = false;
+    const uint8_t rebootResponse[] = {'R', 'e', 'b', 'o', 'o', 't', 'i', 'n', 'g', '\r', '\n'};
+	RNBD_cmdBuf[0] = 'R';
     RNBD_cmdBuf[1] = ',';
     RNBD_cmdBuf[2] = '1';
     RNBD_cmdBuf[4] = '\r';
     RNBD_cmdBuf[5] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 5);
-
-    return RNBD_MsgRead(reboot, sizeof (reboot));
+    RebootStatus = RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 5U, rebootResponse, 11U);
+	
+	RNBD.DelayMs(350);
+	
+	return RebootStatus;
 }
 
 
 bool RNBD_FactoryReset(RNBD_FACTORY_RESET_MODE_t resetMode)
 {
+    bool FactoryResetStatus = false;
     const uint8_t reboot[] = {'R', 'e', 'b', 'o', 'o', 't', ' ', 'a', 'f', 't', 'e', 'r', ' ', 'F', 'a', 'c', 't', 'o', 'r', 'y', ' ', 'R', 'e', 's', 'e', 't', '\r', '\n'};
     RNBD_cmdBuf[0] = 'S';
     RNBD_cmdBuf[1] = 'F';
     RNBD_cmdBuf[2] = ',';
-    RNBD_cmdBuf[4] = resetMode;
+    RNBD_cmdBuf[4] = (char)resetMode;
     RNBD_cmdBuf[5] = '\r';
-    RNBD_cmdBuf[5] = '\n';
+    RNBD_cmdBuf[6] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 6);
-
-    return RNBD_MsgRead(reboot, sizeof (reboot));
+    FactoryResetStatus = RNBD_SendCommand_ReceiveResponse(RNBD_cmdBuf, 6U, reboot, 28U);
+	
+	RNBD.DelayMs(350);
+	
+	return FactoryResetStatus;
 }
 
 
@@ -552,9 +599,29 @@ bool RNBD_Disconnect(void)
     RNBD_cmdBuf[3] = '\r';
     RNBD_cmdBuf[4] = '\n';
 
-    RNBD_CmdSend(RNBD_cmdBuf, 5);
+    RNBD_SendCmd(RNBD_cmdBuf, 5U);
 
-    return RNBD_DefaultResponseRead();
+    return RNBD_ReadDefaultResponse();
+}
+
+void RNBD_set_StatusDelimter(char Delimter_Character)
+{
+	RNBD_STATUS_MESSAGE_DELIMITER = Delimter_Character;
+}
+
+char RNBD_get_StatusDelimter()
+{
+	return RNBD_STATUS_MESSAGE_DELIMITER;
+}
+
+void RNBD_set_NoDelimter(bool value)
+{
+    skip_Delimter=value;
+}
+
+bool RNBD_get_NoDelimter()
+{
+    return skip_Delimter;
 }
 
 
@@ -611,16 +678,21 @@ static bool RNBD_DataFilter(void)
         {
             *RNBD_pHead++ = readChar;
         }
+		else
+        {
+            //do nothing
+        }
     }
     else
     {
-        if (readChar == RNBD_STATUS_MESSAGE_DELIMITER)
+        if (readChar == RNBD_STATUS_MESSAGE_DELIMITER && (skip_Delimter == false))
         {
             asyncBuffering = true;
             RNBD_pHead = RNBD_asyncBuffer;
         }
         else 
         {
+			skip_Delimter = true;
             RNBD_dataReady = true;
             RNBD_peek = readChar;
         }

@@ -1,14 +1,16 @@
 /**
-  @Company
-    Microchip Technology Inc.
-
-  @Description
-    This Source file provides APIs.
-    Generation Information :
-    Driver Version    :   1.0.0
+ * USART1 Generated Driver API Header File
+ * 
+ * @file usart1.h
+ * 
+ * @defgroup usart1 USART1
+ * 
+ * @brief This file contains API prototypes and other datatypes for USART1 module.
+ *
+ * @version USART1 Driver Version 2.0.3
 */
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -28,166 +30,335 @@
     THIS SOFTWARE.
 */
 
-
 #ifndef USART1_H
 #define USART1_H
 
+/**
+  Section: Included Files
+ */
+
 #include <stdbool.h>
+#include <stdint.h>
 #include <stdio.h>
-#include "../system/utils/compiler.h"
-#include "../system/utils/atomic.h"
-#include "../system/clock.h"
-#include "uart_interface.h"
+#include "../system/system.h"
+#include "uart_drv_interface.h"
+
+#ifdef __cplusplus  // Provide C++ Compatibility
+
+    extern "C" {
+
+#endif
 
 /* Normal Mode, Baud register value */
 #define USART1_BAUD_RATE(BAUD_RATE) (((float)10000000 * 64 / (16 * (float)BAUD_RATE)) + 0.5)
 
-/* USART1 Ringbuffer */
+#define UART1_interface UART1
 
-#define USART1_RX_BUFFER_SIZE 64
-#define USART1_TX_BUFFER_SIZE 64
-#define USART1_RX_BUFFER_MASK (USART1_RX_BUFFER_SIZE - 1)
-#define USART1_TX_BUFFER_MASK (USART1_TX_BUFFER_SIZE - 1)
 
-typedef enum { USART1_RX_CB = 1, USART1_TX_CB } usart1_cb_t;
-typedef void (*usart_callback)(void);
-extern const struct UART_INTERFACE USART1_Interface;
+#define UART1_Initialize     USART1_Initialize
+#define UART1_Deinitialize   USART1_Deinitialize
+#define UART1_Write          USART1_Write
+#define UART1_Read           USART1_Read
+#define UART1__IsRxReady     USART1_IsRxReady
+#define UART1_IsTxReady      USART1_IsTxReady
+#define UART1_IsTxDone       USART1_IsTxDone
+
+#define UART1_TransmitEnable       USART1_TransmitEnable
+#define UART1_TransmitDisable      USART1_TransmitDisable
+#define UART1_AutoBaudSet          USART1_AutoBaudSet
+#define UART1_AutoBaudQuery        USART1_AutoBaudQuery
+#define UART1_BRGCountSet               (NULL)
+#define UART1_BRGCountGet               (NULL)
+#define UART1_BaudRateSet               (NULL)
+#define UART1_BaudRateGet               (NULL)
+#define UART1__AutoBaudEventEnableGet   (NULL)
+#define UART1_ErrorGet             USART1_ErrorGet
+
+#define UART1_TxCompleteCallbackRegister     USART1_TxCompleteCallbackRegister
+#define UART1_RxCompleteCallbackRegister      USART1_RxCompleteCallbackRegister
+#define UART1_TxCollisionCallbackRegister  (NULL)
+#define UART1_FramingErrorCallbackRegister USART1_FramingErrorCallbackRegister
+#define UART1_OverrunErrorCallbackRegister USART1_OverrunErrorCallbackRegister
+#define UART1_ParityErrorCallbackRegister  USART1_ParityErrorCallbackRegister
+#define UART1_EventCallbackRegister        (NULL)
+
 
 /**
- * \brief Initialize USART interface
- * If module is configured to disabled state, the clock to the USART is disabled
- * if this is supported by the device's clock system.
- *
- * \return Initialization status.
- * \retval 0 the USART init was successful
- * \retval 1 the USART init was not successful
+ @ingroup usart1
+ @struct usart1_status_t
+ @breif This is an instance of USART1_STATUS for USART1 module
+ */
+typedef union {
+    struct {
+        uint8_t perr : 1;     /**<This is a bit field for Parity Error status*/
+        uint8_t ferr : 1;     /**<This is a bit field for Framing Error status*/
+        uint8_t oerr : 1;     /**<This is a bit field for Overfrun Error status*/
+        uint8_t reserved : 5; /**<Reserved*/
+    };
+    size_t status;            /**<Group byte for status errors*/
+}usart1_status_t;
+
+
+
+/**
+ Section: Data Type Definitions
+ */
+
+/**
+ * @ingroup usart1
+ * @brief External object for usart1_interface.
+ */
+extern const uart_drv_interface_t UART1;
+
+/**
+ * @ingroup usart1
+ * @brief This API initializes the USART1 driver.
+ *        This routine initializes the USART1 module.
+ *        This routine must be called before any other USART1 routine is called.
+ *        This routine should only be called once during system initialization.
+ * @param None.
+ * @return None.
  */
 void USART1_Initialize(void);
 
 /**
- * \brief Enable RX and TX in USART1
- * 1. If supported by the clock system, enables the clock to the USART
- * 2. Enables the USART module by setting the RX and TX enable-bits in the USART control register
- *
- * \return Nothing
+ * @ingroup usart1
+ * @brief This API Deinitializes the USART1 driver.
+ *        This routine disables the USART1 module.
+ * @param None.
+ * @return None.
+ */
+void USART1_Deinitialize(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API enables the USART1 module.     
+ * @param None.
+ * @return None.
  */
 void USART1_Enable(void);
 
 /**
- * \brief Enable RX in USART1
- * 1. If supported by the clock system, enables the clock to the USART
- * 2. Enables the USART module by setting the RX enable-bit in the USART control register
- *
- * \return Nothing
- */
-void USART1_EnableRx(void);
-
-/**
- * \brief Enable TX in USART1
- * 1. If supported by the clock system, enables the clock to the USART
- * 2. Enables the USART module by setting the TX enable-bit in the USART control register
- *
- * \return Nothing
- */
-void USART1_EnableTx(void);
-
-/**
- * \brief Disable USART1
- * 1. Disables the USART module by clearing the enable-bit(s) in the USART control register
- * 2. If supported by the clock system, disables the clock to the USART
- *
- * \return Nothing
+ * @ingroup usart1
+ * @brief This API disables the USART1 module.
+ * @param None.
+ * @return None.
  */
 void USART1_Disable(void);
 
 /**
- * \brief Get recieved data from USART1
- *
- * \return Data register from USART1 module
+ * @ingroup usart1
+ * @brief This API enables the USART1 transmitter.
+ *        USART1 should also be enable to send bytes over TX pin.
+ * @param None.
+ * @return None.
  */
-uint8_t USART1_GetData(void);
+void USART1_TransmitEnable(void);
 
 /**
- * \brief Check if the usart can accept data to be transmitted
- *
- * \return The status of USART TX data ready check
- * \retval false The USART can not receive data to be transmitted
- * \retval true The USART can receive data to be transmitted
+ * @ingroup usart1
+ * @brief This API disables the USART1 transmitter.
+ * @param None.
+ * @return None.
  */
-bool USART1_IsTxReady(void);
+void USART1_TransmitDisable(void);
 
 /**
- * \brief Check if the USART has received data
- *
- * \return The status of USART RX data ready check
- * \retval true The USART has received data
- * \retval false The USART has not received data
+ * @ingroup usart1
+ * @brief This API enables the USART1 Receiver.
+ *        USART1 should also be enable to receive bytes over RX pin.
+ * @param None.
+ * @return None.
+ */
+void USART1_ReceiveEnable(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API disables the USART1 Receiver.
+ * @param None.
+ * @return None.
+ */
+void USART1_ReceiveDisable(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API enables the USART1 transmitter interrupt.
+ * @param None.
+ * @return None.
+ */
+void USART1_TransmitInterruptEnable(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API disables the USART1 transmitter interrupt.
+ * @param None.
+ * @return None.
+ */
+void USART1_TransmitInterruptDisable(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API enables the USART1 receiver interrupt.
+ * @param None.
+ * @return None.
+ */
+void USART1_ReceiveInterruptEnable(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API disables the USART1 receiver interrupt.
+ * @param None.
+ * @return None.
+ */
+void USART1_ReceiveInterruptDisable(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API enables the USART1 AutoBaud Detection.
+ * @param bool enable.
+ * @return None.
+ */
+void USART1_AutoBaudSet(bool enable);
+
+/**
+ * @ingroup usart1
+ * @brief This API reads the USART1 AutoBaud Detection Complete bit.
+ * @param None.
+ * @return None.
+ */
+bool USART1_AutoBaudQuery(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API reads the USART1 AutoBaud Detection error bit.
+ * @param None.
+ * @return None.
+ */
+bool USART1_IsAutoBaudDetectError(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API Reset the USART1 AutoBaud Detection error bit.
+ * @param None.
+ * @return None.
+ */
+void USART1_AutoBaudDetectErrorReset(void);
+
+/**
+ * @ingroup usart1
+ * @brief This API checks if USART1 receiver has received data and ready to be read.
+ * @param None.
+ * @retval true if USART1 receiver FIFO has a data
+ * @retval false USART1 receiver FIFO is empty
  */
 bool USART1_IsRxReady(void);
 
 /**
- * \brief Check if USART1 data is transmitted
- *
- * \return Receiver ready status
- * \retval true  Data is not completely shifted out of the shift register
- * \retval false Data completely shifted out if the USART shift register
+ * @ingroup usart1
+ * @brief This function checks if USART1 transmitter is ready to accept a data byte.
+ * @param None.
+ * @retval true if USART1 transmitter FIFO has atleast 1 byte space
+ * @retval false if USART1 transmitter FIFO is full
  */
-bool USART1_IsTxBusy(void);
+bool USART1_IsTxReady(void);
 
-bool USART1_IsTxDone(void);
 /**
- * \brief Read one character from USART1
- *
- * Function will block if a character is not available.
- *
- * \return Data read from the USART1 module
+ * @ingroup usart1
+ * @brief This function return the status of transmit shift register (TSR).
+ * @param None.
+ * @retval true if Data completely shifted out from the TSR
+ * @retval false if Data is present in Transmit FIFO and/or in TSR
+ */
+bool USART1_IsTxDone(void);
+
+/**
+ * @ingroup usart1
+ * @brief This function gets the error status of the last read byte.
+ *        This function should be called before USART1_Read().
+ * @param None.
+ * @return Status of the last read byte. See usart1_status_t struct for more details.
+ */
+size_t USART1_ErrorGet(void);
+
+/**
+ * @ingroup usart1
+ * @brief This function reads the 8 bits from receiver FIFO register.
+ * @pre The transfer status should be checked to see if the receiver is not empty
+ *      before calling this function. USART1_IsRxReady() should be checked in if () before calling this API.
+ * @param None.
+ * @return 8-bit data from RX FIFO register.
  */
 uint8_t USART1_Read(void);
 
 /**
- * \brief Write one character to USART1
- *
- * Function will block until a character can be accepted.
- *
- * \param[in] data The character to write to the USART
- *
- * \return Nothing
+ * @ingroup usart1
+ * @brief This function writes a byte of data to the transmitter FIFO register.
+ * @pre The transfer status should be checked to see if the transmitter is ready to accept a byte
+ *      before calling this function. USART1_IsTxReady() should be checked in if() before calling this API.
+ * @param txData  - Data byte to write to the TX FIFO.
+ * @return None.
  */
-void USART1_Write(const uint8_t data);
+void USART1_Write(uint8_t txData);
 
 /**
- * \brief ErrorCheck USART interface
- *
- * Checks the Recieve Error for Parity, Framing, OverRun
- *
- * No Return and Arguments associated
+ * @ingroup usart1
+ * @brief This API registers the function to be called upon USART1 framing error.
+ * @param callbackHandler - a function pointer which will be called upon framing error condition.
+ * @return None.
  */
-void USART1_ErrorCheck(void);
+void USART1_FramingErrorCallbackRegister(void (* callbackHandler)(void));
 
 /**
- * \brief Set call back function for USART1
- *
- * \param[in] cb The call back function to set
- *
- * \param[in] type The type of ISR to be set
- *
- * \return Nothing
+ * @ingroup usart1
+ * @brief This API registers the function to be called upon USART1 overrun error.
+ * @param callbackHandler - a function pointer which will be called upon overrun error condition.
+ * @return None.
  */
- 
-void USART1_DefaultRxIsrCb(void);
+void USART1_OverrunErrorCallbackRegister(void (* callbackHandler)(void));
 
-void USART1_DefaultTxIsrCb(void);
+/**
+ * @ingroup usart1
+ * @brief This API registers the function to be called upon USART1 Parity error.
+ * @param callbackHandler - a function pointer which will be called upon Parity error condition.
+ * @return None.
+ */
+void USART1_ParityErrorCallbackRegister(void (* callbackHandler)(void));
 
-void USART1_SetISRCb(usart_callback cb, usart1_cb_t type);
+/**
+ * @ingroup usart1
+ * @brief This function is the ISR function to be called upon Transmitter interrupt.
+ * @param void.
+ * @return None.
+ */
+void USART1_TransmitISR(void);
 
-void USART1_SetRXISRCb(usart_callback cb);
+/**
+ * @ingroup usart1
+ * @brief This API registers the function to be called upon Transmitter interrupt.
+ * @param callbackHandler - a function pointer which will be called upon Transmitter interrupt condition.
+ * @return None.
+ */
+void USART1_TxCompleteCallbackRegister(void (* callbackHandler)(void));
 
-void USART1_SetTXISRCb(usart_callback cb);
+/**
+ * @ingroup usart1
+ * @brief This function is the ISR function to be called upon Receiver interrupt.
+ * @param void.
+ * @return None.
+ */
+void USART1_ReceiveISR(void);
 
-void USART1_FramingErrorCallbackRegister(void* callbackHandler);
+/**
+ * @ingroup usart1
+ * @brief This API registers the function to be called upon Receiver interrupt.
+ * @param callbackHandler - a function pointer which will be called upon Receiver interrupt condition.
+ * @return None.
+ */
+void USART1_RxCompleteCallbackRegister(void (* callbackHandler)(void));
+#ifdef __cplusplus  // Provide C++ Compatibility
 
-void USART1_OverrunErrorCallbackRegister(void* callbackHandler);
+    }
 
-void USART1_ParityErrorCallbackRegister(void* callbackHandler);
+#endif
 
-#endif /* USART1_H */
+#endif  // USART1_H

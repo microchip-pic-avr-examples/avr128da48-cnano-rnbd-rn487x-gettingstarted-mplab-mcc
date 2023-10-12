@@ -1,14 +1,17 @@
 /**
-  @Company
-    Microchip Technology Inc.
-
-  @Description
-    This Source file provides APIs.
-    Generation Information :
-    Driver Version    :   1.0.0
+ * USART0 Generated Driver API Header File
+ * 
+ * @file usart0.c
+ * 
+ * @ingroup usart0
+ * 
+ * @brief This is the generated driver implementation file for the USART0 driver using 
+ *
+ * @version USART0 Driver Version 2.0.3
 */
+
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -28,252 +31,100 @@
     THIS SOFTWARE.
 */
 
+/**
+  Section: Included Files
+*/
 
 #include "../usart0.h"
-#define RECEIVE_ERROR_MASK 0x46
+
+/**
+  Section: Macro Declarations
+*/
+
+#define USART0_TX_BUFFER_SIZE (8) //buffer size should be 2^n
+#define USART0_TX_BUFFER_MASK (USART0_TX_BUFFER_SIZE - 1) 
+
+#define USART0_RX_BUFFER_SIZE (8) //buffer size should be 2^n
+#define USART0_RX_BUFFER_MASK (USART0_RX_BUFFER_SIZE - 1)
 
 
-static void DefaultFramingErrorCallback(void);
-static void DefaultOverrunErrorCallback(void);
-static void DefaultParityErrorCallback(void);
-void (*USART0_rx_isr_cb)(void) = &USART0_DefaultRxIsrCb;
-void (*USART0_tx_isr_cb)(void) = &USART0_DefaultTxIsrCb;
-void (*USART0_framing_err_cb)(void) = &DefaultFramingErrorCallback;
-void (*USART0_overrun_err_cb)(void) = &DefaultOverrunErrorCallback;
-void (*USART0_parity_err_cb)(void) = &DefaultParityErrorCallback;
 
-const struct UART_INTERFACE USART0_Interface = {
-  .Initialize = USART0_Initialize,
-  .Write = USART0_Write,
-  .Read = USART0_Read,
-  .RxCompleteCallbackRegister = USART0_SetRXISRCb,
-  .TxCompleteCallbackRegister = USART0_SetTXISRCb,
-  .ErrorCallbackRegister = NULL,
-  .FramingErrorCallbackRegister = USART0_FramingErrorCallbackRegister,
-  .OverrunErrorCallbackRegister = USART0_OverrunErrorCallbackRegister,
-  .ParityErrorCallbackRegister = USART0_ParityErrorCallbackRegister,
-  .ChecksumErrorCallbackRegister = NULL,
-  .IsRxReady = USART0_IsRxReady,
-  .IsTxReady = USART0_IsTxReady,
-  .IsTxDone = USART0_IsTxDone
+/**
+  Section: Driver Interface
+ */
+
+const uart_drv_interface_t UART0 = {
+    .Initialize = &USART0_Initialize,
+    .Deinitialize = &USART0_Deinitialize,
+    .Read = &USART0_Read,
+    .Write = &USART0_Write,
+    .IsRxReady = &USART0_IsRxReady,
+    .IsTxReady = &USART0_IsTxReady,
+    .IsTxDone = &USART0_IsTxDone,
+    .TransmitEnable = &USART0_TransmitEnable,
+    .TransmitDisable = &USART0_TransmitDisable,
+    .AutoBaudSet = &USART0_AutoBaudSet,
+    .AutoBaudQuery = &USART0_AutoBaudQuery,
+    .BRGCountSet = NULL,
+    .BRGCountGet = NULL,
+    .BaudRateSet = NULL,
+    .BaudRateGet = NULL,
+    .AutoBaudEventEnableGet = NULL,
+    .ErrorGet = &USART0_ErrorGet,
+    .TxCompleteCallbackRegister = &USART0_TxCompleteCallbackRegister,
+    .RxCompleteCallbackRegister = &USART0_RxCompleteCallbackRegister,
+    .TxCollisionCallbackRegister = NULL,
+    .FramingErrorCallbackRegister = &USART0_FramingErrorCallbackRegister,
+    .OverrunErrorCallbackRegister = &USART0_OverrunErrorCallbackRegister,
+    .ParityErrorCallbackRegister = &USART0_ParityErrorCallbackRegister,
+    .EventCallbackRegister = NULL,
 };
 
-/* Static Variables holding the ringbuffer used in IRQ mode */
-static uint8_t          USART0_rxbuf[USART0_RX_BUFFER_SIZE];
-static volatile uint8_t USART0_rx_head;
-static volatile uint8_t USART0_rx_tail;
-static volatile uint8_t USART0_rx_elements;
-static uint8_t          USART0_txbuf[USART0_TX_BUFFER_SIZE];
-static volatile uint8_t USART0_tx_head;
-static volatile uint8_t USART0_tx_tail;
-static volatile uint8_t USART0_tx_elements;
+/**
+  Section: USART0 variables
+*/
+static volatile uint8_t usart0TxHead = 0;
+static volatile uint8_t usart0TxTail = 0;
+static volatile uint8_t usart0TxBuffer[USART0_TX_BUFFER_SIZE];
+volatile uint8_t usart0TxBufferRemaining;
+static volatile uint8_t usart0RxHead = 0;
+static volatile uint8_t usart0RxTail = 0;
+static volatile uint8_t usart0RxBuffer[USART0_RX_BUFFER_SIZE];
+static volatile usart0_status_t usart0RxStatusBuffer[USART0_RX_BUFFER_SIZE];
+volatile uint8_t usart0RxCount;
+static volatile usart0_status_t usart0RxLastError;
 
-void USART0_ErrorCheck(void)
-{
-    uint8_t errorMask = USART0.RXDATAH;
-    if(errorMask & RECEIVE_ERROR_MASK)
-    {
-        if(errorMask & USART_PERR_bm)
-        {
-            USART0_parity_err_cb();
-        } 
-        if(errorMask & USART_FERR_bm)
-        {
-            USART0_framing_err_cb();
-        }
-        if(errorMask & USART_BUFOVF_bm)
-        {
-            USART0_overrun_err_cb();
-        }
-    }
-    
-}
+/**
+  Section: USART0 APIs
+*/
+void (*USART0_FramingErrorHandler)(void);
+void (*USART0_OverrunErrorHandler)(void);
+void (*USART0_ParityErrorHandler)(void);
+void (*USART0_TxInterruptHandler)(void);
+static void (*USART0_TxCompleteInterruptHandler)(void);
+void (*USART0_RxInterruptHandler)(void);
+static void (*USART0_RxCompleteInterruptHandler)(void);
 
-void USART0_DefaultRxIsrCb(void)
-{
-    uint8_t data;
-    uint8_t tmphead;
-    USART0_ErrorCheck();
-    
-    /* Read the received data */
-    data = USART0.RXDATAL;
-    /* Calculate buffer index */
-    tmphead = (USART0_rx_head + 1) & USART0_RX_BUFFER_MASK;
-        
-    if (tmphead == USART0_rx_tail) {
-            /* ERROR! Receive buffer overflow */
-    }else {
-    /*Store new index*/
-    USART0_rx_head = tmphead;
-    
-    /* Store received data in buffer */
-    USART0_rxbuf[tmphead] = data;
-    USART0_rx_elements++;
-    }
-}
+static void USART0_DefaultFramingErrorCallback(void);
+static void USART0_DefaultOverrunErrorCallback(void);
+static void USART0_DefaultParityErrorCallback(void);
+void USART0_TransmitISR (void);
+void USART0_ReceiveISR(void);
 
-static void DefaultFramingErrorCallback(void)
-{
-    /* Add your interrupt code here or use USART0.FramingCallbackRegister function to use Custom ISR */
-}
 
-static void DefaultOverrunErrorCallback(void)
-{
-    /* Add your interrupt code here or use USART0.OverrunCallbackRegister function to use Custom ISR */
-}
 
-static void DefaultParityErrorCallback(void)
-{
-    /* Add your interrupt code here or use USART0.ParityCallbackRegister function to use Custom ISR */
-}
-
-void USART0_DefaultTxIsrCb(void)
-{
-    uint8_t tmptail;
-
-    /* Check if all data is transmitted */
-    if (USART0_tx_elements != 0) {
-        /* Calculate buffer index */
-        tmptail = (USART0_tx_tail + 1) & USART0_TX_BUFFER_MASK;
-        /* Store new index */
-        USART0_tx_tail = tmptail;
-        /* Start transmission */
-        USART0.TXDATAL = USART0_txbuf[tmptail];
-        
-        USART0_tx_elements--;
-    }
-
-    if (USART0_tx_elements == 0) {
-            /* Disable Tx interrupt */
-            USART0.CTRLA &= ~(1 << USART_DREIE_bp);
-    }
-}
-
-void USART0_SetISRCb(usart_callback cb, usart0_cb_t type)
-{
-    switch (type) {
-        case USART0_RX_CB:
-                USART0_rx_isr_cb = cb;
-                break;
-        case USART0_TX_CB:
-                USART0_tx_isr_cb = cb;
-                break;
-        default:
-                // do nothing
-                break;
-    }
-}
-
-void USART0_SetRXISRCb(usart_callback cb)
-{
-    USART0_SetISRCb(cb,USART0_RX_CB);
-}
-
-void USART0_SetTXISRCb(usart_callback cb)
-{
-    USART0_SetISRCb(cb,USART0_TX_CB);
-}
-
-void USART0_FramingErrorCallbackRegister(void* callbackHandler)
-{
-    USART0_framing_err_cb=callbackHandler;
-}
-
-void USART0_OverrunErrorCallbackRegister(void* callbackHandler)
-{
-    USART0_overrun_err_cb=callbackHandler;
-}
-
-void USART0_ParityErrorCallbackRegister(void* callbackHandler)
-{
-    USART0_parity_err_cb=callbackHandler;
-}
-
-/* Interrupt service routine for RX complete */
-ISR(USART0_RXC_vect)
-{
-    if (USART0_rx_isr_cb != NULL)
-    {
-        (*USART0_rx_isr_cb)();
-    }
-}
-
-/* Interrupt service routine for Data Register Empty */
-ISR(USART0_DRE_vect)
-{
-    if (USART0_tx_isr_cb != NULL)
-    {
-        (*USART0_tx_isr_cb)();
-    }
-}
-
-ISR(USART0_TXC_vect)
-{
-    USART0.STATUS |= USART_TXCIF_bm;
-}
-
-bool USART0_IsTxReady(void)
-{
-    return (USART0_tx_elements != USART0_TX_BUFFER_SIZE);
-}
-
-bool USART0_IsRxReady(void)
-{
-    return (USART0_rx_elements != 0);
-}
-
-bool USART0_IsTxBusy(void)
-{
-    return (!(USART0.STATUS & USART_TXCIF_bm));
-}
-
-bool USART0_IsTxDone(void)
-{       
-    return (USART0.STATUS & USART_TXCIF_bm);
-}
-
-uint8_t USART0_Read(void)
-{
-    uint8_t tmptail;
-
-    /* Wait for incoming data */
-    while (USART0_rx_elements == 0)
-            ;
-    /* Calculate buffer index */
-    tmptail = (USART0_rx_tail + 1) & USART0_RX_BUFFER_MASK;
-    /* Store new index */
-    USART0_rx_tail = tmptail;
-    ENTER_CRITICAL(R);
-    USART0_rx_elements--;
-    EXIT_CRITICAL(R);
-
-    /* Return data */
-    return USART0_rxbuf[tmptail];
-}
-
-void USART0_Write(const uint8_t data)
-{
-    uint8_t tmphead;
-
-    /* Calculate buffer index */
-    tmphead = (USART0_tx_head + 1) & USART0_TX_BUFFER_MASK;
-    /* Wait for free space in buffer */
-    while (USART0_tx_elements == USART0_TX_BUFFER_SIZE)
-            ;
-    /* Store data in buffer */
-    USART0_txbuf[tmphead] = data;
-    /* Store new index */
-    USART0_tx_head = tmphead;
-    ENTER_CRITICAL(W);
-    USART0_tx_elements++;
-    EXIT_CRITICAL(W);
-    /* Enable Tx interrupt */
-    USART0.CTRLA |= (1 << USART_DREIE_bp);
-}
+/**
+  Section: USART0  APIs
+*/
 
 void USART0_Initialize(void)
 {
-    //set baud rate register
+    USART0_RxInterruptHandler = USART0_ReceiveISR;  
+    USART0_TxInterruptHandler = USART0_TransmitISR;
+
+    // Set the USART0 module to the options selected in the user interface.
+
+    //BAUD 347; 
     USART0.BAUD = (uint16_t)USART0_BAUD_RATE(115200);
 	
     // ABEIE disabled; DREIE disabled; LBME disabled; RS485 DISABLE; RXCIE enabled; RXSIE enabled; TXCIE enabled; 
@@ -285,54 +136,342 @@ void USART0_Initialize(void)
     // CMODE Asynchronous Mode; UCPHA enabled; UDORD disabled; CHSIZE Character size: 8 bit; PMODE No Parity; SBMODE 1 stop bit; 
     USART0.CTRLC = 0x3;
 	
-    //DBGCTRL_DBGRUN
+    //DBGRUN disabled; 
     USART0.DBGCTRL = 0x0;
 	
-    //EVCTRL_IREI
+    //IREI disabled; 
     USART0.EVCTRL = 0x0;
 	
-    //RXPLCTRL_RXPL
+    //RXPL 0x0; 
     USART0.RXPLCTRL = 0x0;
 	
-    //TXPLCTRL_TXPL
+    //TXPL 0x0; 
     USART0.TXPLCTRL = 0x0;
 	
+    USART0_FramingErrorCallbackRegister(USART0_DefaultFramingErrorCallback);
+    USART0_OverrunErrorCallbackRegister(USART0_DefaultOverrunErrorCallback);
+    USART0_ParityErrorCallbackRegister(USART0_DefaultParityErrorCallback);
+    usart0RxLastError.status = 0;  
+    usart0TxHead = 0;
+    usart0TxTail = 0;
+    usart0TxBufferRemaining = sizeof(usart0TxBuffer);
+    usart0RxHead = 0;
+    usart0RxTail = 0;
+    usart0RxCount = 0;
+    USART0.CTRLA |= USART_RXCIE_bm; 
 
-    uint8_t x;
+}
 
-    /* Initialize ringbuffers */
-    x = 0;
-
-    USART0_rx_tail     = x;
-    USART0_rx_head     = x;
-    USART0_rx_elements = x;
-    USART0_tx_tail     = x;
-    USART0_tx_head     = x;
-    USART0_tx_elements = x;
-
+void USART0_Deinitialize(void)
+{
+    USART0.CTRLA &= ~(USART_RXCIE_bm);    
+    USART0.CTRLA &= ~(USART_DREIE_bm);  
+    USART0.BAUD = 0x00;	
+    USART0.CTRLA = 0x00;	
+    USART0.CTRLB = 0x00;	
+    USART0.CTRLC = 0x00;	
+    USART0.DBGCTRL = 0x00;	
+    USART0.EVCTRL = 0x00;	
+    USART0.RXPLCTRL = 0x00;	
+    USART0.TXPLCTRL = 0x00;	
 }
 
 void USART0_Enable(void)
 {
-    USART0.CTRLB |= USART_RXEN_bm | USART_TXEN_bm;
-}
-
-void USART0_EnableRx(void)
-{
-    USART0.CTRLB |= USART_RXEN_bm;
-}
-
-void USART0_EnableTx(void)
-{
-    USART0.CTRLB |= USART_TXEN_bm;
+    USART0.CTRLB |= USART_RXEN_bm | USART_TXEN_bm; 
 }
 
 void USART0_Disable(void)
 {
-    USART0.CTRLB &= ~(USART_RXEN_bm | USART_TXEN_bm);
+    USART0.CTRLB &= ~(USART_RXEN_bm | USART_TXEN_bm); 
 }
 
-uint8_t USART0_GetData(void)
+void USART0_TransmitEnable(void)
 {
-    return USART0.RXDATAL;
+    USART0.CTRLB |= USART_TXEN_bm; 
 }
+
+void USART0_TransmitDisable(void)
+{
+    USART0.CTRLB &= ~(USART_TXEN_bm); 
+}
+
+void USART0_ReceiveEnable(void)
+{
+    USART0.CTRLB |= USART_RXEN_bm ; 
+}
+
+void USART0_ReceiveDisable(void)
+{
+    USART0.CTRLB &= ~(USART_RXEN_bm); 
+}
+
+void USART0_AutoBaudSet(bool enable)
+{
+    if(enable)
+    {
+        USART0.CTRLB |= USART_RXMODE_gm & (0x02 << USART_RXMODE_gp); 
+        USART0.STATUS |= USART_WFB_bm ; 
+    }
+    else
+    {
+       USART0.CTRLB &= ~(USART_RXMODE_gm); 
+       USART0.STATUS &= ~(USART_BDF_bm);  
+    }
+}
+
+bool USART0_AutoBaudQuery(void)
+{
+     return (bool)(USART0.STATUS & USART_BDF_bm) ; 
+}
+
+bool USART0_IsAutoBaudDetectError(void)
+{
+     return (bool)(USART0.STATUS & USART_ISFIF_bm) ; 
+}
+
+void USART0_AutoBaudDetectErrorReset(void)
+{
+    USART0.STATUS |= USART_ISFIF_bm ;
+	USART0_AutoBaudSet(false);
+    USART0_ReceiveDisable();
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    asm("nop");
+    USART0_ReceiveEnable();
+    USART0_AutoBaudSet(true);
+}
+
+void USART0_TransmitInterruptEnable(void)
+{
+    USART0.CTRLA |= USART_DREIE_bm ; 
+}
+
+void USART0_TransmitInterruptDisable(void)
+{ 
+    USART0.CTRLA &= ~(USART_DREIE_bm); 
+}
+
+void USART0_ReceiveInterruptEnable(void)
+{
+    USART0.CTRLA |= USART_RXCIE_bm ; 
+}
+void USART0_ReceiveInterruptDisable(void)
+{
+    USART0.CTRLA &= ~(USART_RXCIE_bm); 
+}
+
+bool USART0_IsRxReady(void)
+{
+    return (usart0RxCount ? true : false);
+}
+
+bool USART0_IsTxReady(void)
+{
+    return (usart0TxBufferRemaining ? true : false);
+}
+
+bool USART0_IsTxDone(void)
+{
+    return (bool)(USART0.STATUS & USART_TXCIF_bm);
+}
+
+size_t USART0_ErrorGet(void)
+{
+    usart0RxLastError.status = usart0RxStatusBuffer[(usart0RxTail + 1) & USART0_RX_BUFFER_MASK].status;
+    return usart0RxLastError.status;
+}
+
+uint8_t USART0_Read(void)
+{
+    uint8_t readValue  = 0;
+    uint8_t tempRxTail;
+    
+    readValue = usart0RxBuffer[usart0RxTail];
+    tempRxTail = (usart0RxTail + 1) & USART0_RX_BUFFER_MASK; // Buffer size of RX should be in the 2^n  
+    usart0RxTail = tempRxTail;
+    USART0.CTRLA &= ~(USART_RXCIE_bm); 
+    if(usart0RxCount != 0)
+    {
+        usart0RxCount--;
+    }
+    USART0.CTRLA |= USART_RXCIE_bm; 
+
+
+    return readValue;
+}
+
+/* Interrupt service routine for RX complete */
+ISR(USART0_RXC_vect)
+{
+    USART0_ReceiveISR();
+}
+
+void USART0_ReceiveISR(void)
+{
+    uint8_t regValue;
+    uint8_t tempRxHead;
+    
+    usart0RxStatusBuffer[usart0RxHead].status = 0;
+
+    if(USART0.RXDATAH & USART_FERR_bm)
+    {
+        usart0RxStatusBuffer[usart0RxHead].ferr = 1;
+        if(NULL != USART0_FramingErrorHandler)
+        {
+            USART0_FramingErrorHandler();
+        } 
+    }
+    if(USART0.RXDATAH & USART_PERR_bm)
+    {
+        usart0RxLastError.perr = 1;
+        if(NULL != USART0_ParityErrorHandler)
+        {
+            USART0_ParityErrorHandler();
+        }  
+    }
+    if(USART0.RXDATAH & USART_BUFOVF_bm)
+    {
+        usart0RxStatusBuffer[usart0RxHead].oerr = 1;
+        if(NULL != USART0_OverrunErrorHandler)
+        {
+            USART0_OverrunErrorHandler();
+        }   
+    }    
+    
+    regValue = USART0.RXDATAL;
+    
+    tempRxHead = (usart0RxHead + 1) & USART0_RX_BUFFER_MASK;// Buffer size of RX should be in the 2^n
+    if (tempRxHead == usart0RxTail) {
+		// ERROR! Receive buffer overflow 
+	} 
+    else
+    {
+        // Store received data in buffer 
+		usart0RxBuffer[usart0RxHead] = regValue;
+		usart0RxHead = tempRxHead;
+
+		usart0RxCount++;
+	}
+    if (USART0_RxCompleteInterruptHandler != NULL)
+    {
+        (*USART0_RxCompleteInterruptHandler)();
+    }
+    
+}
+
+void USART0_Write(uint8_t txData)
+{
+    uint8_t tempTxHead;
+    
+    if(usart0TxBufferRemaining) // check if at least one byte place is available in TX buffer
+    {
+       usart0TxBuffer[usart0TxHead] = txData;
+       tempTxHead = (usart0TxHead + 1) & USART0_TX_BUFFER_MASK;// Buffer size of TX should be in the 2^n
+       
+       usart0TxHead = tempTxHead;
+       USART0.CTRLA &= ~(USART_DREIE_bm);  //Critical value decrement
+       usart0TxBufferRemaining--;  // one less byte remaining in TX buffer
+    }
+    else
+    {
+        //overflow condition; TX buffer is full
+    }
+
+    USART0.CTRLA |= USART_DREIE_bm;  
+}
+
+/* Interrupt service routine for Data Register Empty */
+ISR(USART0_DRE_vect)
+{
+    USART0_TransmitISR();
+}
+
+ISR(USART0_TXC_vect)
+{
+    USART0.STATUS |= USART_TXCIF_bm;
+}
+
+void USART0_TransmitISR(void)
+{
+    uint8_t tempTxTail;
+    // use this default transmit interrupt handler code
+    if(sizeof(usart0TxBuffer) > usart0TxBufferRemaining) // check if all data is transmitted
+    {
+       USART0.TXDATAL = usart0TxBuffer[usart0TxTail];
+
+       tempTxTail = (usart0TxTail + 1) & USART0_TX_BUFFER_MASK;// Buffer size of TX should be in the 2^n
+       
+       usart0TxTail = tempTxTail;
+
+       usart0TxBufferRemaining++; // one byte sent, so 1 more byte place is available in TX buffer
+    }
+    else
+    {
+        USART0.CTRLA &= ~(USART_DREIE_bm); 
+    }
+    if (USART0_TxCompleteInterruptHandler != NULL)
+    {
+        (*USART0_TxCompleteInterruptHandler)();
+    }
+    
+    // or set custom function using USART0_SetTxInterruptHandler()
+}
+
+static void USART0_DefaultFramingErrorCallback(void)
+{
+    
+}
+
+static void USART0_DefaultOverrunErrorCallback(void)
+{
+    
+}
+
+static void USART0_DefaultParityErrorCallback(void)
+{
+    
+}
+
+void USART0_FramingErrorCallbackRegister(void (* callbackHandler)(void))
+{
+    if(NULL != callbackHandler)
+    {
+        USART0_FramingErrorHandler = callbackHandler;
+    }
+}
+
+void USART0_OverrunErrorCallbackRegister(void (* callbackHandler)(void))
+{
+    if(NULL != callbackHandler)
+    {
+        USART0_OverrunErrorHandler = callbackHandler;
+    }    
+}
+
+void USART0_ParityErrorCallbackRegister(void (* callbackHandler)(void))
+{
+    if(NULL != callbackHandler)
+    {
+        USART0_ParityErrorHandler = callbackHandler;
+    } 
+}
+
+void USART0_RxCompleteCallbackRegister(void (* callbackHandler)(void))
+{
+    if(NULL != callbackHandler)
+    {
+       USART0_RxCompleteInterruptHandler = callbackHandler; 
+    }   
+}
+
+void USART0_TxCompleteCallbackRegister(void (* callbackHandler)(void))
+{
+    if(NULL != callbackHandler)
+    {
+       USART0_TxCompleteInterruptHandler = callbackHandler;
+    }   
+}
+
+

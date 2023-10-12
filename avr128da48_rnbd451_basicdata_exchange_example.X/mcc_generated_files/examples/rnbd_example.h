@@ -28,5 +28,5 @@
 */
 #ifndef RNBD_EXAMPLE_H
 #define	RNBD_EXAMPLE_H
-bool Example_Initialized(void);
+bool RNBD_Example_Initialized(void);
 #endif	/* RNBD_EXAMPLE_H */

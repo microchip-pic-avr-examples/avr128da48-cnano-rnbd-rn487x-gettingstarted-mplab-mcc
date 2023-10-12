@@ -8,11 +8,11 @@
  * @brief This is generated driver header for pins. 
  *        This header file provides APIs for all pins selected in the GUI.
  *
- * @version Driver Version  1.0.1
+ * @version Driver Version  1.1.0
 */
 
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -55,6 +55,7 @@
 #define IO_PA1_EnableInterruptForFallingEdge() do { PORTA.PIN1CTRL = (PORTA.PIN1CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
 #define IO_PA1_DisableDigitalInputBuffer() do { PORTA.PIN1CTRL = (PORTA.PIN1CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
 #define IO_PA1_EnableInterruptForLowLevelSensing() do { PORTA.PIN1CTRL = (PORTA.PIN1CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+#define PA1_SetInterruptHandler IO_PA1_SetInterruptHandler
 
 //get/set IO_PA0 aliases
 #define IO_PA0_SetHigh() do { PORTA_OUTSET = 0x1; } while(0)
@@ -73,6 +74,7 @@
 #define IO_PA0_EnableInterruptForFallingEdge() do { PORTA.PIN0CTRL = (PORTA.PIN0CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
 #define IO_PA0_DisableDigitalInputBuffer() do { PORTA.PIN0CTRL = (PORTA.PIN0CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
 #define IO_PA0_EnableInterruptForLowLevelSensing() do { PORTA.PIN0CTRL = (PORTA.PIN0CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+#define PA0_SetInterruptHandler IO_PA0_SetInterruptHandler
 
 //get/set BT_RST aliases
 #define BT_RST_SetHigh() do { PORTD_OUTSET = 0x80; } while(0)
@@ -91,6 +93,7 @@
 #define BT_RST_EnableInterruptForFallingEdge() do { PORTD.PIN7CTRL = (PORTD.PIN7CTRL & ~PORT_ISC_gm) | 0x3 ; } while(0)
 #define BT_RST_DisableDigitalInputBuffer() do { PORTD.PIN7CTRL = (PORTD.PIN7CTRL & ~PORT_ISC_gm) | 0x4 ; } while(0)
 #define BT_RST_EnableInterruptForLowLevelSensing() do { PORTD.PIN7CTRL = (PORTD.PIN7CTRL & ~PORT_ISC_gm) | 0x5 ; } while(0)
+#define PD7_SetInterruptHandler BT_RST_SetInterruptHandler
 
 /**
  * @ingroup  pinsdriver
@@ -102,64 +105,64 @@ void PIN_MANAGER_Initialize();
 
 /**
  * @ingroup  pinsdriver
- * @brief Default Interrupt Handler for PA1 pin. 
- *        This is a predefined interrupt handler to be used together with the PA1_SetInterruptHandler() method.
- *        This handler is called every time the PA1 ISR is executed. 
+ * @brief Default Interrupt Handler for IO_PA1 pin. 
+ *        This is a predefined interrupt handler to be used together with the IO_PA1_SetInterruptHandler() method.
+ *        This handler is called every time the IO_PA1 ISR is executed. 
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param none
  * @return none
  */
-void PA1_DefaultInterruptHandler(void);
+void IO_PA1_DefaultInterruptHandler(void);
 
 /**
  * @ingroup  pinsdriver
- * @brief Interrupt Handler Setter for PA1 pin input-sense-config functionality.
- *        Allows selecting an interrupt handler for PA1 at application runtime
+ * @brief Interrupt Handler Setter for IO_PA1 pin input-sense-config functionality.
+ *        Allows selecting an interrupt handler for IO_PA1 at application runtime
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param InterruptHandler function pointer.
  * @return none
  */
-void PA1_SetInterruptHandler(void (* interruptHandler)(void)) ; 
+void IO_PA1_SetInterruptHandler(void (* interruptHandler)(void)) ; 
 
 /**
  * @ingroup  pinsdriver
- * @brief Default Interrupt Handler for PA0 pin. 
- *        This is a predefined interrupt handler to be used together with the PA0_SetInterruptHandler() method.
- *        This handler is called every time the PA0 ISR is executed. 
+ * @brief Default Interrupt Handler for IO_PA0 pin. 
+ *        This is a predefined interrupt handler to be used together with the IO_PA0_SetInterruptHandler() method.
+ *        This handler is called every time the IO_PA0 ISR is executed. 
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param none
  * @return none
  */
-void PA0_DefaultInterruptHandler(void);
+void IO_PA0_DefaultInterruptHandler(void);
 
 /**
  * @ingroup  pinsdriver
- * @brief Interrupt Handler Setter for PA0 pin input-sense-config functionality.
- *        Allows selecting an interrupt handler for PA0 at application runtime
+ * @brief Interrupt Handler Setter for IO_PA0 pin input-sense-config functionality.
+ *        Allows selecting an interrupt handler for IO_PA0 at application runtime
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param InterruptHandler function pointer.
  * @return none
  */
-void PA0_SetInterruptHandler(void (* interruptHandler)(void)) ; 
+void IO_PA0_SetInterruptHandler(void (* interruptHandler)(void)) ; 
 
 /**
  * @ingroup  pinsdriver
- * @brief Default Interrupt Handler for PD7 pin. 
- *        This is a predefined interrupt handler to be used together with the PD7_SetInterruptHandler() method.
- *        This handler is called every time the PD7 ISR is executed. 
+ * @brief Default Interrupt Handler for BT_RST pin. 
+ *        This is a predefined interrupt handler to be used together with the BT_RST_SetInterruptHandler() method.
+ *        This handler is called every time the BT_RST ISR is executed. 
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param none
  * @return none
  */
-void PD7_DefaultInterruptHandler(void);
+void BT_RST_DefaultInterruptHandler(void);
 
 /**
  * @ingroup  pinsdriver
- * @brief Interrupt Handler Setter for PD7 pin input-sense-config functionality.
- *        Allows selecting an interrupt handler for PD7 at application runtime
+ * @brief Interrupt Handler Setter for BT_RST pin input-sense-config functionality.
+ *        Allows selecting an interrupt handler for BT_RST at application runtime
  * @pre PIN_MANAGER_Initialize() has been called at least once
  * @param InterruptHandler function pointer.
  * @return none
  */
-void PD7_SetInterruptHandler(void (* interruptHandler)(void)) ; 
+void BT_RST_SetInterruptHandler(void (* interruptHandler)(void)) ; 
 #endif /* PINS_H_INCLUDED */

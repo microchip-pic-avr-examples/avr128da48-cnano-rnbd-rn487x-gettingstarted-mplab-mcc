@@ -28,7 +28,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "../uart/usart0.h"
+#include "../../mcc_generated_files/uart/usart0.h"
 #include "rnbd_example.h"
 #include "../rnbd/rnbd_interface.h"
 #include "../rnbd/rnbd.h"
@@ -38,6 +38,8 @@
  *  This is used by the application for communication buffers.
  */
 #define MAX_BUFFER_SIZE                 (80)
+
+bool returnval = false;
 
 /**< Status Buffer instance passed to RNBD drive used for Asynchronous Message Handling (see *RNBD_AsyncMessageHandlerSet in rnbd.c) */
 static char statusBuffer[MAX_BUFFER_SIZE];    
@@ -71,16 +73,15 @@ static bool RNBD_Example_BasicDataExchange(void);
  */  
 static void RNBD_Example_Run(void);
 
-bool Example_Initialized(void)
+bool RNBD_Example_Initialized(void)
 {
     bool exampleIsInitialized = false;
     
     exampleIsInitialized = RNBD_AsyncMessageHandlerSet(statusBuffer, sizeof(statusBuffer));
 
-    RNBD_Initialize();
+    RNBD_Init();
 
     _delay_ms(300);
-
 
     
     if (exampleIsInitialized == true)

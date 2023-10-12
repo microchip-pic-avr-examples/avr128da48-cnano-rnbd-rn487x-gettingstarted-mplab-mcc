@@ -10,7 +10,7 @@
  * @version RNBD Driver Version  2.0.0
 */
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -210,7 +210,7 @@ typedef union
   *  @retval true - Initialization Success
   *  @retval false - Initialization Failure
   */
-bool RNBD_Initialize(void);
+bool RNBD_Init(void);
 
  /**
   * @ingroup rnbd
@@ -219,17 +219,16 @@ bool RNBD_Initialize(void);
   * @param cmdLen - RNBD command length
   * @return none
   */
-void RNBD_CmdSend(const uint8_t *cmd, uint8_t cmdLen);
+void RNBD_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
 
 /**
  * @ingroup rnbd
  * @brief Gets config value from RNBD by sending get command
  * @param getCmd - Get command to send
  * @param getCmdLen - Get command length
- * @param getCmdResp Buffer to store get command response
  * @return index - tracked command response length.
  */
-uint8_t RNBD_CmdGet(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
+uint8_t RNBD_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
 
 
  /**
@@ -240,7 +239,7 @@ uint8_t RNBD_CmdGet(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
   * @retval true - Expected Message Received
   * @retval false - Expected Message NOT Received
   */
-bool RNBD_MsgRead(const uint8_t *expectedMsg, uint8_t msgLen);
+bool RNBD_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
 
  /**
   * @ingroup rnbd
@@ -248,17 +247,19 @@ bool RNBD_MsgRead(const uint8_t *expectedMsg, uint8_t msgLen);
   * @retval true - Default Response Received
   * @retval false - Default Response NOT Received
   */
-bool RNBD_DefaultResponseRead(void);
-
+bool RNBD_ReadDefaultResponse(void);
 
  /**
-  * @ingroup rnbd
-  * @brief Waits for specific message from RNBD.
-  * @param expectedMsg - Expected response/status message from RNBD
-  * @param msgLen - Expected response/status message length
-  * @return none
+  *  @ingroup rnbd
+  *  @brief Puts the RNBD for Command mode ascii set.
+  *  Paramater 1 - Command to be sent
+  *  Parameter 2 - Length of Command to be sent
+  *  Parameter 3 - Expected Response message
+  *  Parameter 4 - Expected Response length
+  *  @retval true - Command Mode Status = Success
+  *  @retval false - Command Mode Status = Failure
   */
-void RNBD_MsgWait(const char *expectedMsg, uint8_t msgLen);
+bool RNBD_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
 
 
  /**
@@ -267,7 +268,7 @@ void RNBD_MsgWait(const char *expectedMsg, uint8_t msgLen);
   *  @retval true - Command Mode Status = Success
   *  @retval false - Command Mode Status = Failure
   */
-bool RNBD_CmdModeEnter(void);
+bool RNBD_EnterCmdMode(void);
 
  /**
   *  @ingroup rnbd
@@ -275,7 +276,7 @@ bool RNBD_CmdModeEnter(void);
   *  @retval true - Data Mode Status = Success
   *  @retval false -Data Mode Status = Failure
   */
-bool RNBD_DataModeEnter(void);
+bool RNBD_EnterDataMode(void);
 
  /**
   * @ingroup rnbd
@@ -293,7 +294,7 @@ uint16_t RNBD_GetGRCommand(void);
   * @retval true - Sets device name
   * @retval false - Failure
   */
-bool RNBD_NameSet(const char *name, uint8_t nameLen);
+bool RNBD_SetName(const uint8_t *name, uint8_t nameLen);
 
 
  /**
@@ -303,7 +304,7 @@ bool RNBD_NameSet(const char *name, uint8_t nameLen);
   * @retval true - Sets device name
   * @retval false - Failure
   */
-bool RNBD_BaudRateSet(uint8_t baudRate);
+bool RNBD_SetBaudRate(uint8_t baudRate);
 
 
  /**
@@ -314,7 +315,7 @@ bool RNBD_BaudRateSet(uint8_t baudRate);
   * @retval true - Sets service bitmap
   * @retval false - Failure
   */
-bool RNBD_ServiceBitmapSet(uint8_t serviceBitmap);
+bool RNBD_SetServiceBitmap(uint8_t serviceBitmap);
 
 
  /**
@@ -325,7 +326,7 @@ bool RNBD_ServiceBitmapSet(uint8_t serviceBitmap);
   * @retval true - Sets features bitmap
   * @retval false - Failure
   */
-bool RNBD_FeaturesBitmapSet(uint16_t featuresBitmap);
+bool RNBD_SetFeaturesBitmap(uint16_t featuresBitmap);
 
 
  /**
@@ -336,7 +337,7 @@ bool RNBD_FeaturesBitmapSet(uint16_t featuresBitmap);
   * @retval true - Sets IO capability
   * @retval false - Failure
   */
-bool RNBD_IOCapabilitySet(uint8_t ioCapability);
+bool RNBD_SetIOCapability(uint8_t ioCapability);
 
 
  /**
@@ -348,7 +349,7 @@ bool RNBD_IOCapabilitySet(uint8_t ioCapability);
   * @retval true - Sets security pin code
   * @retval false - Failure
   */
-bool RNBD_PinCodeSet(const char *pinCode, uint8_t pinCodeLen);
+bool RNBD_SetPinCode(const uint8_t *pinCode, uint8_t pinCodeLen);
 
 
  /**
@@ -360,7 +361,7 @@ bool RNBD_PinCodeSet(const char *pinCode, uint8_t pinCodeLen);
   * @retval true - Delimiters are Set to new characters
   * @retval false - Failure
   */
-bool RNBD_StatusMsgDelimiterSet(char preDelimiter, char postDelimiter);
+bool RNBD_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
 
 
  /**
@@ -370,7 +371,7 @@ bool RNBD_StatusMsgDelimiterSet(char preDelimiter, char postDelimiter);
   * @retval true - Set State Success
   * @retval false - Set State Failure
   */
-bool RNBD_OutputsSet(rnbd_gpio_bitmap_t bitMap);
+bool RNBD_SetOutputs(rnbd_gpio_bitmap_t bitMap);
 
 
  /**
@@ -379,7 +380,7 @@ bool RNBD_OutputsSet(rnbd_gpio_bitmap_t bitMap);
   * @param getGPIOs RNBD pins to read state status from
   * @return RNBD_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
   */
-rnbd_gpio_stateBitMap_t RNBD_InputsValuesGet(rnbd_gpio_ioBitMap_t getGPIOs);
+rnbd_gpio_stateBitMap_t RNBD_GetInputsValues(rnbd_gpio_ioBitMap_t getGPIOs);
 
 
  /**
@@ -388,7 +389,7 @@ rnbd_gpio_stateBitMap_t RNBD_InputsValuesGet(rnbd_gpio_ioBitMap_t getGPIOs);
   * @retval <RSSI>
   * @retval ERR - Not Connected to RNBD
   */
-uint8_t * RNBD_RSSIValueGet(void);
+uint8_t * RNBD_GetRSSIValue(void);
 
 
  /**
@@ -397,7 +398,7 @@ uint8_t * RNBD_RSSIValueGet(void);
   * @retval true - Reboot Success
   * @retval false - Reboot Failure
   */
-bool RNBD_CmdReboot(void);
+bool RNBD_RebootCmd(void);
 
 
  /**
@@ -443,5 +444,45 @@ bool RNBD_isDataReady(void);
   * @return Data Read
   */
 uint8_t RNBD_Read(void);
+
+ /**
+  * \ingroup rnbd
+  * \brief Sets StatusDelimter value.
+  * 
+  * This variable sets the RNBD devices PRE/POST status message delimiter. 
+  * 
+  * \return Nothing
+  */
+void RNBD_set_StatusDelimter(char Delimter_Character);
+
+/**
+  * \ingroup rnbd
+  * \brief Get StatusDelimter value.
+  * 
+  * This variable gets the RNBD devices PRE/POST status message delimiter. 
+  * 
+  * \returns the current StatusDelimter value
+  */
+char RNBD_get_StatusDelimter();
+
+/**
+  * \ingroup rnbd
+  * \brief Sets the No Delimter check during HOST OTA Update.
+  * 
+  * This variable is used to set and not setting the Delimter check . 
+  * 
+  * \returns Nothing
+  */
+void RNBD_set_NoDelimter(bool value);
+
+/**
+  * \ingroup rnbd
+  * \brief Returns the current status No Delimter status.
+  * 
+  * This variable return true or false current status No Delimter status. 
+  * 
+  * \returns true or false 
+  */
+bool RNBD_get_NoDelimter();
 
 #endif	/* RNBD_H */

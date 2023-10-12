@@ -5,12 +5,12 @@
  * 
  * @defgroup delay DELAY BLOCKING DRIVER
  * 
- * @brief This file contains the API to generate delays in the millisecond and microsecond ranges.
+ * @brief This file contains the API to generate delays in the range of milliseconds and microseconds.
  *
  * @version DELAY Driver Version 1.1.0
 */
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -37,15 +37,17 @@
 
 /**
 *  @ingroup delay
-*  @brief Call this function to delay execution of the program for a certain number of milliseconds
-*  @param milliseconds - number of milliseconds to delay
+*  @brief Delays the execution of the program for a certain number of milliseconds
+*  @param[in] milliseconds - Number of milliseconds to delay
+*  @return None.
 */
 void DELAY_milliseconds(uint16_t milliseconds);
 
 /**
 *  @ingroup delay
-*  @brief Call this function to delay execution of the program for a certain number of microseconds
-*  @param microseconds - number of microseconds to delay
+*  @brief Delays the execution of the program for a certain number of microseconds
+*  @param[in] microseconds - Number of microseconds to delay
+*  @return None.
 */
 void DELAY_microseconds(uint16_t microseconds);
 

@@ -10,7 +10,7 @@
  * @version RN487X Driver Version  2.0.0
 */
 /*
-© [2022] Microchip Technology Inc. and its subsidiaries.
+© [2023] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -210,7 +210,7 @@ typedef union
   *  @retval true - Initialization Success
   *  @retval false - Initialization Failure
   */
-bool RN487X_Initialize(void);
+bool RN487X_Init(void);
 
  /**
   * @ingroup rn487x
@@ -219,17 +219,16 @@ bool RN487X_Initialize(void);
   * @param cmdLen - RN487X command length
   * @return none
   */
-void RN487X_CmdSend(const uint8_t *cmd, uint8_t cmdLen);
+void RN487X_SendCmd(const uint8_t *cmd, uint8_t cmdLen);
 
 /**
  * @ingroup rn487x
  * @brief Gets config value from RN487X by sending get command
  * @param getCmd - Get command to send
  * @param getCmdLen - Get command length
- * @param getCmdResp Buffer to store get command response
  * @return index - tracked command response length.
  */
-uint8_t RN487X_CmdGet(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
+uint8_t RN487X_GetCmd(const uint8_t *getCmd, uint8_t getCmdLen);
 
 
  /**
@@ -240,7 +239,7 @@ uint8_t RN487X_CmdGet(const char *getCmd, uint8_t getCmdLen, char *getCmdResp);
   * @retval true - Expected Message Received
   * @retval false - Expected Message NOT Received
   */
-bool RN487X_MsgRead(const uint8_t *expectedMsg, uint8_t msgLen);
+bool RN487X_ReadMsg(const uint8_t *expectedMsg, uint8_t msgLen);
 
  /**
   * @ingroup rn487x
@@ -248,18 +247,19 @@ bool RN487X_MsgRead(const uint8_t *expectedMsg, uint8_t msgLen);
   * @retval true - Default Response Received
   * @retval false - Default Response NOT Received
   */
-bool RN487X_DefaultResponseRead(void);
+bool RN487X_ReadDefaultResponse(void);
 
-
- /**
-  * @ingroup rn487x
-  * @brief Waits for specific message from RN487X.
-  * @param expectedMsg - Expected response/status message from RN487X
-  * @param msgLen - Expected response/status message length
-  * @return none
+/**
+  *  @ingroup rn487x
+  *  @brief Puts the RN487X for Command mode ascii set.
+  *  Paramater 1 - Command to be sent
+  *  Parameter 2 - Length of Command to be sent
+  *  Parameter 3 - Expected Response message
+  *  Parameter 4 - Expected Response length 
+  *  @retval true - Command Mode Status = Success
+  *  @retval false - Command Mode Status = Failure
   */
-void RN487X_MsgWait(const char *expectedMsg, uint8_t msgLen);
-
+bool RN487X_SendCommand_ReceiveResponse(const uint8_t *cmdMsg, uint8_t cmdLen, const uint8_t *responsemsg, uint8_t responseLen);
 
  /**
   *  @ingroup rn487x
@@ -267,7 +267,7 @@ void RN487X_MsgWait(const char *expectedMsg, uint8_t msgLen);
   *  @retval true - Command Mode Status = Success
   *  @retval false - Command Mode Status = Failure
   */
-bool RN487X_CmdModeEnter(void);
+bool RN487X_EnterCmdMode(void);
 
  /**
   *  @ingroup rn487x
@@ -275,7 +275,7 @@ bool RN487X_CmdModeEnter(void);
   *  @retval true - Data Mode Status = Success
   *  @retval false -Data Mode Status = Failure
   */
-bool RN487X_DataModeEnter(void);
+bool RN487X_EnterDataMode(void);
 
 
  /**
@@ -286,7 +286,7 @@ bool RN487X_DataModeEnter(void);
   * @retval true - Sets device name
   * @retval false - Failure
   */
-bool RN487X_NameSet(const char *name, uint8_t nameLen);
+bool RN487X_SetName(const uint8_t *name, uint8_t nameLen);
 
 
  /**
@@ -296,7 +296,7 @@ bool RN487X_NameSet(const char *name, uint8_t nameLen);
   * @retval true - Sets device name
   * @retval false - Failure
   */
-bool RN487X_BaudRateSet(uint8_t baudRate);
+bool RN487X_SetBaudRate(uint8_t baudRate);
 
 
  /**
@@ -307,7 +307,7 @@ bool RN487X_BaudRateSet(uint8_t baudRate);
   * @retval true - Sets service bitmap
   * @retval false - Failure
   */
-bool RN487X_ServiceBitmapSet(uint8_t serviceBitmap);
+bool RN487X_SetServiceBitmap(uint8_t serviceBitmap);
 
 
  /**
@@ -318,7 +318,7 @@ bool RN487X_ServiceBitmapSet(uint8_t serviceBitmap);
   * @retval true - Sets features bitmap
   * @retval false - Failure
   */
-bool RN487X_FeaturesBitmapSet(uint16_t featuresBitmap);
+bool RN487X_SetFeaturesBitmap(uint16_t featuresBitmap);
 
 
  /**
@@ -329,7 +329,7 @@ bool RN487X_FeaturesBitmapSet(uint16_t featuresBitmap);
   * @retval true - Sets IO capability
   * @retval false - Failure
   */
-bool RN487X_IOCapabilitySet(uint8_t ioCapability);
+bool RN487X_SetIOCapability(uint8_t ioCapability);
 
 
  /**
@@ -341,7 +341,7 @@ bool RN487X_IOCapabilitySet(uint8_t ioCapability);
   * @retval true - Sets security pin code
   * @retval false - Failure
   */
-bool RN487X_PinCodeSet(const char *pinCode, uint8_t pinCodeLen);
+bool RN487X_SetPinCode(const uint8_t *pinCode, uint8_t pinCodeLen);
 
 
  /**
@@ -353,7 +353,7 @@ bool RN487X_PinCodeSet(const char *pinCode, uint8_t pinCodeLen);
   * @retval true - Delimiters are Set to new characters
   * @retval false - Failure
   */
-bool RN487X_StatusMsgDelimiterSet(char preDelimiter, char postDelimiter);
+bool RN487X_SetStatusMsgDelimiter(char preDelimiter, char postDelimiter);
 
 
  /**
@@ -363,7 +363,7 @@ bool RN487X_StatusMsgDelimiterSet(char preDelimiter, char postDelimiter);
   * @retval true - Set State Success
   * @retval false - Set State Failure
   */
-bool RN487X_OutputsSet(rn487x_gpio_bitmap_t bitMap);
+bool RN487X_SetOutputs(rn487x_gpio_bitmap_t bitMap);
 
 
  /**
@@ -372,7 +372,7 @@ bool RN487X_OutputsSet(rn487x_gpio_bitmap_t bitMap);
   * @param getGPIOs RN487X pins to read state status from
   * @return RN487X_gpio_stateBitMap_t - 8bit value coordinated to possible pin options
   */
-rn487x_gpio_stateBitMap_t RN487X_InputsValuesGet(rn487x_gpio_ioBitMap_t getGPIOs);
+rn487x_gpio_stateBitMap_t RN487X_GetInputsValues(rn487x_gpio_ioBitMap_t getGPIOs);
 
 
  /**
@@ -381,7 +381,7 @@ rn487x_gpio_stateBitMap_t RN487X_InputsValuesGet(rn487x_gpio_ioBitMap_t getGPIOs
   * @retval <RSSI>
   * @retval ERR - Not Connected to RN487X
   */
-uint8_t * RN487X_RSSIValueGet(void);
+uint8_t * RN487X_GetRSSIValue(void);
 
 
  /**
@@ -390,7 +390,7 @@ uint8_t * RN487X_RSSIValueGet(void);
   * @retval true - Reboot Success
   * @retval false - Reboot Failure
   */
-bool RN487X_CmdReboot(void);
+bool RN487X_RebootCmd(void);
 
 
  /**
@@ -436,5 +436,45 @@ bool RN487X_isDataReady(void);
   * @return Data Read
   */
 uint8_t RN487X_Read(void);
+
+/**
+  * \ingroup rn487x
+  * \brief Sets StatusDelimter value.
+  * 
+  * This variable sets the RN487X devices PRE/POST status message delimiter. 
+  * 
+  * \return Nothing
+  */
+void RN487X_set_StatusDelimter(char Delimter_Character);
+
+/**
+  * \ingroup rn487x
+  * \brief Get StatusDelimter value.
+  * 
+  * This variable gets the RN487X devices PRE/POST status message delimiter. 
+  * 
+  * \returns the current StatusDelimter value
+  */
+char RN487X_get_StatusDelimter();
+
+/**
+  * \ingroup rn487x
+  * \brief Sets the No Delimter check during HOST OTA Update.
+  * 
+  * This variable is used to set and not setting the Delimter check . 
+  * 
+  * \returns Nothing
+  */
+void RN487X_set_NoDelimter(bool value);
+
+/**
+  * \ingroup rn487x
+  * \brief Returns the current status No Delimter status.
+  * 
+  * This variable return true or false current status No Delimter status. 
+  * 
+  * \returns true or false 
+  */
+bool RN487X_get_NoDelimter();
 
 #endif	/* RN487X_H */

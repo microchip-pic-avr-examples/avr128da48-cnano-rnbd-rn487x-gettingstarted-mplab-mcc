@@ -10,12 +10,12 @@
         "shortDescription": "This code example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devices using AVRmicrocontroller.",
         "ide": {
             "name": "MPLAB X",
-            "semverRange": ">=6.0.5"
+            "semverRange": ">=6.0.15"
         },
         "compiler": [
             {
                 "name": "XC8",
-                "semverRange": "^2.40.0"
+                "semverRange": "^2.41.0"
             }
         ],
         "dfp": {
@@ -24,7 +24,7 @@
         },
         "configurator": {
             "name": "MCC",
-            "semverRange": "^5.1.17"
+            "semverRange": "^5.3.7"
         },
         "device": {
             "metaDataVersion": "1.0.0",

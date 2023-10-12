@@ -4,12 +4,8 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>avr128da48_rnbd451_transparent_uart_example</name>
-            <creation-uuid>32bdded5-9d8a-4634-81ce-f198a1f157c3</creation-uuid>
+            <creation-uuid>68c628e1-5a96-4747-be91-9211ad7e53aa</creation-uuid>
             <make-project-type>0</make-project-type>
-            <c-extensions>c</c-extensions>
-            <cpp-extensions/>
-            <header-extensions>h</header-extensions>
-            <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList/>

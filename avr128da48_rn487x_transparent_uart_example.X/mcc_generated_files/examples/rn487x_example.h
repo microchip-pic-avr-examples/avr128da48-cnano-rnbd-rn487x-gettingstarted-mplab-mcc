@@ -28,5 +28,5 @@
 */
 #ifndef RN487X_EXAMPLE_H
 #define	RN487X_EXAMPLE_H
-bool Example_Initialized(void);
+bool RN487X_Example_Initialized(void);
 #endif	/* RN487X_EXAMPLE_H */

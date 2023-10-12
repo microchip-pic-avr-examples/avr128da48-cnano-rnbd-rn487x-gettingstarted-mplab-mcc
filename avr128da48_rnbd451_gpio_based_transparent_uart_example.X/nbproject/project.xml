@@ -4,12 +4,8 @@
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
             <name>avr128da48_rnbd451_gpio_based_transparent_uart_example</name>
-            <creation-uuid>c700a1c3-5d60-4e31-9553-534a35a47a0d</creation-uuid>
+            <creation-uuid>18e6754e-c234-4461-b1e8-afb03890e498</creation-uuid>
             <make-project-type>0</make-project-type>
-            <c-extensions>c</c-extensions>
-            <cpp-extensions/>
-            <header-extensions>h</header-extensions>
-            <asminc-extensions/>
             <sourceEncoding>ISO-8859-1</sourceEncoding>
             <make-dep-projects/>
             <sourceRootList/>

@@ -28,7 +28,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
-#include "../uart/usart0.h"
+#include "../../mcc_generated_files/uart/usart0.h"
 #include "rn487x_example.h"
 #include "../rn487x/rn487x_interface.h"
 #include "../rn487x/rn487x.h"
@@ -71,13 +71,13 @@ static bool RN487X_Example_BasicDataExchange(void);
  */  
 static void RN487X_Example_Run(void);
 
-bool Example_Initialized(void)
+bool RN487X_Example_Initialized(void)
 {
     bool exampleIsInitialized = false;
     
     exampleIsInitialized = RN487X_AsyncMessageHandlerSet(statusBuffer, sizeof(statusBuffer));
 
-    RN487X_Initialize();
+    RN487X_Init();
 
     _delay_ms(300);
     
