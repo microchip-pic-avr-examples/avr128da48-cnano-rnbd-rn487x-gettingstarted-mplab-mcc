@@ -145,7 +145,9 @@ Install the MPLAB Code Configurator Plug-in:
 
     ![](images/GUID-5ADA889B-5F93-48F2-B5EF-4EE824D9DEA5-low.png)
 
-3.  If MCC is not available, install it. Navigate to _Tools→Plugins_. Under **Available Plugins** select "MPLAB Code Configurator", ensure the checkbox is selected and press **Install**. Once the installation is completed, MCC will be available.![](images/GUID-FF1D230A-1359-45DE-9631-F96EA45455EE-low.png)
+3.  If MCC is not available, install it. Navigate to _Tools→Plugins_. Under **Available Plugins** select "MPLAB Code Configurator", ensure the checkbox is selected and press **Install**. Once the installation is completed, MCC will be available.
+
+  ![](images/GUID-FF1D230A-1359-45DE-9631-F96EA45455EE-low.png)
 4.  On launching MCC, click the **Content Manager** button.
 
     |WARNING|
@@ -234,8 +236,6 @@ Install the MPLAB Code Configurator Plug-in:
 9. UART Settings:
     -   **Note:** The below UART selections are applicable for both Transparent UART Application and Basic Data Exchange (USART0 & USART1)
 
-       <br />
-
        ![](images/GUID-33FE9FF7-FB87-4855-8007-6CB4C82D055B-low.png)
 
        ![](images/GUID-BA56BBC1-6C5F-4F58-9E67-466B607AA2DB-low.png)
@@ -267,8 +267,7 @@ This section explains the RNBD451 MPLAB X IDE project setup, code generation, an
 
 <br />
 
--   AVR128DA48 MCC Configuration - Basic Data Exchange Example<br />
-
+-   AVR128DA48 MCC Configuration - Basic Data Exchange Example
     <br />
 
     - Set "Device Selection" to RNBD as shown in above image.
@@ -307,10 +306,8 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
 <br />
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example
-  <br />
 
   - Set "Device Selection" to RNBD.
-
   - Enable "Sample Examples".
   - Expand "Reference Examples" and select Transparent UART application.
 
@@ -326,13 +323,10 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
 
     2.   **Important:** For USART0 and USART1 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx,Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
 
-        <br />
-
         ![](images/GUID-5ACA33D0-6216-49F1-A17C-41E07D391C89-low.png)
 
         ![](images/GUID-53BBBABA-CF2F-4763-9846-2D9BE6462AD0-low.png)
 
-        <br />
 
 Configuration for AVR Transparent UART was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
 
@@ -397,11 +391,8 @@ Pin mapping between RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pin
 
     Deselect the checkboxes in the Start High and Pull-Up columns. Change Rx and Tx in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
 
-    <br />
-
     ![](images/GUID-92234883-B629-410B-80A4-AB33D78AF844-low.png)
 
-    <br />
 
 Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
 
@@ -412,7 +403,11 @@ Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-
 
 1.   Click the **Generate** button next to Project Resources.
 
+    <br />
+
     ![](images/GUID-D61FD824-523E-47C1-AF68-7A85F6F8EC98-low.png)
+
+    <br />
 
 2.  Include the header `#include "mcc_generated_files/examples/rnbd_example.h"` in `main.c`.
 3.  Call the `RNBD_Example_Initialized();` function in `main()` after `SYSTEM_Initialize()`.
@@ -430,7 +425,9 @@ Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-
 
     **Important:** The slot was decided based on the UART Instances which were configured for this example (see the pin mapping table between the MCU and the RNBD Click shown below).
 
-    - Pin Mapping Table between MCU and RNBD Click
+    - Pin mapping table between MCU and RNBD Click
+        <br />
+
         |S.no|Pin Functionality|AVR|RNBD Click|
         |----|-----------------|---|----------|
         |  1 |Receive (RxD)    |RA1| Tx       |
@@ -661,9 +658,6 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 
   ![](images/GUID-EEF87C36-9DF7-44ED-A556-5F6DC3FEE9FC-low.png)
 
-    <br />
-
-
 **Notes:**
 
 1.   The Transparent UART application uses two instance of USART0 and USART1 for data transfer.
@@ -736,11 +730,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 1.  Download and install Microchip Bluetooth Data (MBD) from [App Store](https://apps.apple.com/us/app/microchip-bluetooth-data/id1319166097) or [Google Play](https://play.google.com/store/apps/details?id=com.microchip.bluetooth.data&hl=en_IN&gl=US).
 2.  Launch the phone application.
 
-    ![](images/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)![](GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)
-
-    <br />
-
-    ![](images/GUID-8A9EE9CE-AA92-4648-8364-09987F2E0526-low.png)
+    ![](images/GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)![](GUID-7271A2D0-99A8-41F4-BB4C-269F2F83820C-low.png)![](images/GUID-8A9EE9CE-AA92-4648-8364-09987F2E0526-low.png)
 
     <br />
 
