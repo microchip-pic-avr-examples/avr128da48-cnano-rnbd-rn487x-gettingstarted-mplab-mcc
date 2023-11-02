@@ -391,7 +391,7 @@ Pin mapping between RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pin
 
     <br />
 
-    ![](images/GUID-92234883-B629-410B-80A4-AB33D78AF844-low.png)
+    ![](images/RNBD_GPIO_Pin_status.png)
 
 
 Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
