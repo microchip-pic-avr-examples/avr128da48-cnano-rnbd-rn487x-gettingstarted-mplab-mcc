@@ -236,12 +236,10 @@ Install the MPLAB Code Configurator Plug-in:
         <br />
 
 9. UART Settings:
-    -   **Note:** The below UART selections are applicable for both Transparent UART Application and Basic Data Exchange (USART0 & USART1)
-       <br />
+    -   **Note:** The below UART selections are applicable for both Transparent UART Application and Basic Data Exchange (USART0 & USART1)<br />
+    ![](images/GUID-33FE9FF7-FB87-4855-8007-6CB4C82D055B-low.png)
 
-       ![](images/GUID-33FE9FF7-FB87-4855-8007-6CB4C82D055B-low.png)
-
-       ![](images/GUID-BA56BBC1-6C5F-4F58-9E67-466B607AA2DB-low.png)
+    ![](images/GUID-BA56BBC1-6C5F-4F58-9E67-466B607AA2DB-low.png)
 
 
 10. Global Interrupt Settings:
@@ -302,15 +300,14 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
 
 
 ## RNBD Transparent UART Application Pin Settings<a name="rnbd-transparent-uart-application-pin-settings"></a>
-
 <br />
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example
-  <br />
+    <br />
 
-  - Set "Device Selection" to RNBD.
-  - Enable "Sample Examples".
-  - Expand "Reference Examples" and select Transparent UART application.
+    - Set "Device Selection" to RNBD.
+    - Enable "Sample Examples".
+    - Expand "Reference Examples" and select Transparent UART application.
 
      ![](images/GUID-8778600E-033C-4176-85E6-419A1FD0CE2D-low.png)
 
@@ -644,15 +641,15 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example<br />
 
-  - Set "Device Selection" to RN487x.
+    - Set "Device Selection" to RN487x.
 
-  - Enable "Sample Examples".
-  - Expand "Reference Examples" and select Transparent UART application.
+    - Enable "Sample Examples".
+    - Expand "Reference Examples" and select Transparent UART application.
 
-  ![](images/GUID-71A42A1A-8E94-47B4-BE6C-B9FF92D2048E-low.png)
-    <br />
+     ![](images/GUID-71A42A1A-8E94-47B4-BE6C-B9FF92D2048E-low.png)
+     <br />
 
-  ![](images/GUID-EEF87C36-9DF7-44ED-A556-5F6DC3FEE9FC-low.png)
+     ![](images/GUID-EEF87C36-9DF7-44ED-A556-5F6DC3FEE9FC-low.png)
 
 **Notes:**
 
