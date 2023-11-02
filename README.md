@@ -388,6 +388,7 @@ Pin mapping between RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pin
     <br />
 
     Deselect the checkboxes in the Start High and Pull-Up columns. Change Rx and Tx in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
+
     <br />
 
     ![](images/GUID-92234883-B629-410B-80A4-AB33D78AF844-low.png)
