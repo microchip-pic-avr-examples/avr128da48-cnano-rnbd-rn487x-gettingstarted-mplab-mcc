@@ -148,6 +148,8 @@ Install the MPLAB Code Configurator Plug-in:
 3.  If MCC is not available, install it. Navigate to _Tools→Plugins_. Under **Available Plugins** select "MPLAB Code Configurator", ensure the checkbox is selected and press **Install**. Once the installation is completed, MCC will be available.
 
   ![](images/GUID-FF1D230A-1359-45DE-9631-F96EA45455EE-low.png)
+  <br />
+
 4.  On launching MCC, click the **Content Manager** button.
 
     |WARNING|
@@ -235,6 +237,7 @@ Install the MPLAB Code Configurator Plug-in:
 
 9. UART Settings:
     -   **Note:** The below UART selections are applicable for both Transparent UART Application and Basic Data Exchange (USART0 & USART1)
+       <br />
 
        ![](images/GUID-33FE9FF7-FB87-4855-8007-6CB4C82D055B-low.png)
 
@@ -250,8 +253,6 @@ Install the MPLAB Code Configurator Plug-in:
 
         <br />
 
-        <br />
-
         ![](images/GUID-71201DF5-485D-4A36-B7D4-89C7F2126FE6-low.png)
 
         <br />
@@ -264,7 +265,6 @@ Install the MPLAB Code Configurator Plug-in:
 This section explains the RNBD451 MPLAB X IDE project setup, code generation, and shows how to run the Basic Data Exchange and Transparent UART applications with the AVR128DA48 microcontroller.
 
 ## RNBD Basic Data Exchange Pin Settings<a name="rnbd-basic-data-exchange-pin-settings"></a>
-
 <br />
 
 -   AVR128DA48 MCC Configuration - Basic Data Exchange Example
@@ -306,6 +306,7 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
 <br />
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example
+  <br />
 
   - Set "Device Selection" to RNBD.
   - Enable "Sample Examples".
@@ -318,14 +319,14 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
     <br />
 
     **Notes:**
-
     1.   The Transparent UART application uses two instance USART0 and USART1 for data transfer.
 
     2.   **Important:** For USART0 and USART1 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx,Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
+    <br />
 
-        ![](images/GUID-5ACA33D0-6216-49F1-A17C-41E07D391C89-low.png)
+    ![](images/GUID-5ACA33D0-6216-49F1-A17C-41E07D391C89-low.png)
 
-        ![](images/GUID-53BBBABA-CF2F-4763-9846-2D9BE6462AD0-low.png)
+    ![](images/GUID-53BBBABA-CF2F-4763-9846-2D9BE6462AD0-low.png)
 
 
 Configuration for AVR Transparent UART was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
@@ -390,6 +391,7 @@ Pin mapping between RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pin
     <br />
 
     Deselect the checkboxes in the Start High and Pull-Up columns. Change Rx and Tx in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
+    <br />
 
     ![](images/GUID-92234883-B629-410B-80A4-AB33D78AF844-low.png)
 
@@ -401,13 +403,9 @@ Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-
 
 <br />
 
-1.   Click the **Generate** button next to Project Resources.
+1.   Click the **Generate** button next to Project Resources.<br />
+  ![](images/GUID-D61FD824-523E-47C1-AF68-7A85F6F8EC98-low.png)
 
-    <br />
-
-    ![](images/GUID-D61FD824-523E-47C1-AF68-7A85F6F8EC98-low.png)
-
-    <br />
 
 2.  Include the header `#include "mcc_generated_files/examples/rnbd_example.h"` in `main.c`.
 3.  Call the `RNBD_Example_Initialized();` function in `main()` after `SYSTEM_Initialize()`.
@@ -642,11 +640,9 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 
 
 ## RN487x Transparent UART Application Pin Settings<a name="rn487x-transparent-uart-application-pin-settings"></a>
-
 <br />
 
--   AVR128DA48 MCC Configuration - Transparent Serial Example
-  <br />
+-   AVR128DA48 MCC Configuration - Transparent Serial Example<br />
 
   - Set "Device Selection" to RN487x.
 
@@ -669,7 +665,6 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 Configuration for AVR Transparent UART application was completed. Click [here](#rn487x-code-generation-&-compilation) for rn487x code generation and compilation section.
 
 ## RN487x Code Generation and Compilation<a name="rn487x-code-generation-&-compilation"></a>
-
 <br />
 
 1.  Click the **Generate** button next to Project Resources.
