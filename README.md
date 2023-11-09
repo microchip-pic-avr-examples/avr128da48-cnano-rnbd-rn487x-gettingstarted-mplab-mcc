@@ -78,7 +78,7 @@ This library uses one Universal Asynchronous Receiver and Transmitter (UART), on
 
 -   [MPLAB XC8 2.41](http://www.microchip.com/mplab/compilers) or newer
 -   [MPLAB Code Configurator 5.3.7](https://www.microchip.com/mplab/mplab-code-configurator) or newer
--   [MPLAB Code Configurator](https://www.microchip.com/mplab/mplab-code-configurator) Device Libraries AVR128Dx28/32/48/64, AVR64Dx28/32/48/64 MCUs
+-   [MPLAB Code Configurator](https://www.microchip.com/mplab/mplab-code-configurator) Device Libraries AVR128Dx28/32/48/64, AVR64Dx28/32/48/64 Microcontrollers (MCUs)
 -   [MPLAB Code Configurator](https://www.microchip.com/mplab/mplab-code-configurator) Device Libraries AVR® MCUs
 -   [Microchip AVR-Dx_DFP Series Device Support \(2.3.272\)](https://packs.download.microchip.com) or newer
 
@@ -236,7 +236,7 @@ Install the MPLAB Code Configurator Plug-in:
         <br />
 
 9. UART Settings:
-    -   **Note:** The below UART selections are applicable for both Transparent UART Application and Basic Data Exchange (USART0 & USART1)<br />
+    -   **Note:** The below UART selections are applicable for both Transparent UART Application and Basic Data Exchange (USART0 and USART1)<br />
     ![](images/GUID-33FE9FF7-FB87-4855-8007-6CB4C82D055B-low.png)
 
     ![](images/GUID-BA56BBC1-6C5F-4F58-9E67-466B607AA2DB-low.png)
@@ -268,9 +268,9 @@ This section explains the RNBD451 MPLAB X IDE project setup, code generation, an
 -   AVR128DA48 MCC Configuration - Basic Data Exchange Example
     <br />
 
-    - Set "Device Selection" to RNBD as shown in above image.
-    - Enable "Sample Examples".
-    - Expand "Reference Examples" and select Basic Data Exchange.
+    - Set "Device Selection" to RNBD
+    - Enable "Sample Examples"
+    - Expand "Reference Examples" and select Basic Data Exchange
 
      ![](images/GUID-8ADE895A-F2B2-4CFC-89A3-71C60A62155F-low.png)
 
@@ -280,7 +280,7 @@ This section explains the RNBD451 MPLAB X IDE project setup, code generation, an
 **Notes:**
 
 1.   The Basic Data Exchange application uses only one instance USART0 for data transfer.
-2.   **Important:** For USART0 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx,Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
+2.   **Important:** For USART0 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx, Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
 
         <br />
 
@@ -295,7 +295,7 @@ This section explains the RNBD451 MPLAB X IDE project setup, code generation, an
         <br />
 
 
-Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
+Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code-generation-&-compilation) for the RNBD Code Generation and Compilation section.
 
 
 
@@ -305,9 +305,9 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
 -   AVR128DA48 MCC Configuration - Transparent Serial Example
     <br />
 
-    - Set "Device Selection" to RNBD.
-    - Enable "Sample Examples".
-    - Expand "Reference Examples" and select Transparent UART application.
+    - Set "Device Selection" to RNBD
+    - Enable "Sample Examples"
+    - Expand "Reference Examples" and select Transparent UART application
 
      ![](images/GUID-8778600E-033C-4176-85E6-419A1FD0CE2D-low.png)
 
@@ -318,7 +318,7 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
     **Notes:**
     1.   The Transparent UART application uses two instance USART0 and USART1 for data transfer.
 
-    2.   **Important:** For USART0 and USART1 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx,Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
+    2.   **Important:** For USART0 and USART1 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx, Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
     <br />
 
     ![](images/GUID-5ACA33D0-6216-49F1-A17C-41E07D391C89-low.png)
@@ -342,7 +342,7 @@ The RNBD451 device can use Bluetooth (BT) Status indication 1 and Bluetooth (BT)
 
 <br />
 
-Pin mapping between RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pins with AVR128DA48:
+Pin mapping between the RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pins with AVR128DA48:
 
 <br />
 
@@ -394,7 +394,7 @@ Pin mapping between RNBD Bluetooth (BT) Status Indication 1 and Indication 2 pin
     ![](images/RNBD_GPIO_Pin_status.png)
 
 
-Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
+Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-generation-&-compilation) for the RNBD Code Generation and Compilation section.
 
 
 ## RNBD Code Generation and Compilation<a name="rnbd-code-generation-&-compilation"></a>
@@ -525,7 +525,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
     <br />
 
-3.  Select "PIC32CXBZ" to scan for available devices to connect with. The application automatically scans the area for Bluetooth devices within range. By default, the device appear as "RNBD451_xxxx".
+3.  Select "PIC32CXBZ" to scan for available devices to connect with. The application automatically scans the area for Bluetooth devices within range. By default, the device appears as "RNBD451_xxxx".
 
     <br />
 
@@ -606,10 +606,10 @@ This section explains the RN487x MPLAB X IDE project setup, code generation, and
 
     <br />
 
-    - Set "Device Selection" to RN487x.
+    - Set "Device Selection" to RN487x
 
-    - Enable "Sample Examples".
-    - Expand "Reference Examples" and select Basic Data Exchange.
+    - Enable "Sample Examples"
+    - Expand "Reference Examples" and select Basic Data Exchange
 
      ![](images/GUID-41FE8A10-5BA7-4042-909E-923EA51472F7-low.png)
 
@@ -621,7 +621,7 @@ This section explains the RN487x MPLAB X IDE project setup, code generation, and
   **Notes:**
 
   1.   The Basic Data Exchange application uses only one instance of USART0 for data transfer.
-  2.   **Important:** For USART0 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx,Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
+  2.   **Important:** For USART0 RxD and TxD, deselect the checkboxes in the Start High and Pull-Up columns. Change Rx, Tx and BT_RST in the Input/Sense Configuration [ISC] column from "Interrupt Disabled but input buffer enabled" to "Sense Both Edges".
 
         <br />
 
@@ -660,7 +660,7 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 
   ![](images/GUID-53BBBABA-CF2F-4763-9846-2D9BE6462AD0-low.png)
 
-Configuration for AVR Transparent UART application was completed. Click [here](#rn487x-code-generation-&-compilation) for rn487x code generation and compilation section.
+Configuration for AVR Transparent UART application was completed. Click [here](#rn487x-code-generation-&-compilation) for RN487x Code Generation and Compilation section.
 
 ## RN487x Code Generation and Compilation<a name="rn487x-code-generation-&-compilation"></a>
 <br />
@@ -822,7 +822,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
       <br />
 
-    - The application automatically scans the area for Bluetooth devices within range. By default, the device appear as "RN487x_xxxx"
+    - The application automatically scans the area for Bluetooth devices within range. By default, the device appears as "RN487x_xxxx"
 
       <br />
 
