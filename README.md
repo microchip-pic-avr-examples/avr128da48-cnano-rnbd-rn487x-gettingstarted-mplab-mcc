@@ -326,13 +326,13 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rnbd-code
     ![](images/GUID-53BBBABA-CF2F-4763-9846-2D9BE6462AD0-low.png)
 
 
-Configuration for AVR Transparent UART was completed. Click [here](#rnbd-code-generation-&-compilation) for rnbd code generation and compilation section.
+Configuration for AVR Transparent UART was completed. Click [here](#rnbd-code-generation-&-compilation) for RNBD Code Generation and Compilation section.
 
 <br />
 
 ## RNBD GPIO Based Connection Setup<a name="rnbd-gpio-based-connection-setup"></a>
 
-The RNBD451 device can use Bluetooth (BT) Status indication 1 and Bluetooth (BT) Status indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the Host MCU can verify the BT connection status, by monitoring the status indication pins.
+The RNBD451 device can use Bluetooth (BT) Status Indication 1 and Bluetooth (BT) Status Indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the Host MCU can verify the BT connection status, by monitoring the Status Indication pins.
 
 **Bluetooth (BT) Status Indication Pin Table**
 
@@ -447,7 +447,7 @@ Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-
 ## RNBD Example 1: Running Basic Data Exchange Example Application<a name="rnbd-example1:-running-basic-data-exchange-application"></a>
 
 This example shows how an MCU can be programmed to transmit data to a smartphone over BLE. The MCU device will send a Periodic Transmission of a single character when STREAM\_OPEN is processed through the Message Handler. This indicates to the MCU and RNBD module that the application is in a Data Streaming mode of operation and can expect to hear data over the BLE connection.<br /><br />
-The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CHARACTER (‘1’)` statements used in the demonstration can be located at the top of the `rnbd_example.c file`.
+The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CHARACTER (‘1’)` statements used in the demonstration can be located at the top of the `rnbd_example.c` file.
 
 ![](images/GUID-0C803050-62C5-4E5F-BA14-619E48B5916E-low.png)
 
@@ -642,10 +642,10 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 
 -   AVR128DA48 MCC Configuration - Transparent Serial Example<br />
 
-    - Set "Device Selection" to RN487x.
+    - Set "Device Selection" to RN487x
 
-    - Enable "Sample Examples".
-    - Expand "Reference Examples" and select Transparent UART application.
+    - Enable "Sample Examples"
+    - Expand "Reference Examples" and select Transparent UART application
 
      ![](images/GUID-71A42A1A-8E94-47B4-BE6C-B9FF92D2048E-low.png)
      <br />
@@ -660,7 +660,7 @@ Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-co
 
   ![](images/GUID-53BBBABA-CF2F-4763-9846-2D9BE6462AD0-low.png)
 
-Configuration for AVR Transparent UART application was completed. Click [here](#rn487x-code-generation-&-compilation) for RN487x Code Generation and Compilation section.
+Configuration for AVR Transparent UART application was completed. Click [here](#rn487x-code-generation-&-compilation) for the RN487x Code Generation and Compilation section.
 
 ## RN487x Code Generation and Compilation<a name="rn487x-code-generation-&-compilation"></a>
 <br />
@@ -716,7 +716,7 @@ Configuration for AVR Transparent UART application was completed. Click [here](#
 ## RN487x Example 1: Running Basic Data Exchange Example Application<a name="rn487x-example1:-running-basic-data-exchange-example-application"></a>
 
 This example shows how an MCU can be programmed to transmit data to a smartphone over BLE. The MCU device will send a Periodic Transmission of a single character when STREAM_OPEN is processed through the Message Handler. This indicates to the MCU and RN487x module that the application is in a Data Streaming mode of operation and can expect to hear data over the BLE connection.<br /><br />
-The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CHARACTER (‘1’)` statements used in the demonstration can be located at the top of the `rn487x_example.c file`.
+The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CHARACTER (‘1’)` statements used in the demonstration can be located at the top of the `rn487x_example.c` file.
 
 ![](images/RN487x_BasicData_Exchange_HW.png)
 
@@ -731,7 +731,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
       ![](images/GUID-E19A7964-8190-4C53-8BBA-6370A19C9829-low.png)
 
-3.  The application will automatically scan the area for Bluetooth devices within range. Look for the "RN487x" device under scanned list.
+3.  The application automatically scan the area for Bluetooth devices within range. Look for the "RN487x" device under scanned list.
 
     <br />
 
@@ -822,7 +822,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
       <br />
 
-    - The application automatically scans the area for Bluetooth devices within range. By default, the device appears as "RN487x_xxxx"
+    - The application automatically scans the area for Bluetooth devices within range. By default, the device appears as "RN487x_xxxx".
 
       <br />
 
