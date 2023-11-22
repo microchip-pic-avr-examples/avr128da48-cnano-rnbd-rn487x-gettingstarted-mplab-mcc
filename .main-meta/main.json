@@ -4,7 +4,7 @@
     "content": {
         "metaDataVersion": "1.3.0",
         "name": "com.microchip.mcu8.mplabx.project.avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
-        "version": "1.0.0",
+        "version": "2.0.0",
         "displayName": "AVR128DA48 RNBD451_RN487x Demo Application for Transparent UART and Basic Data Exchange",
         "projectName": "avr128da48-cnano-rnbd-rn487x-gettingstarted-mplab-mcc",
         "shortDescription": "This code example demonstrates how to transfer Data between mobile APP and to the PC Terminal for rnbd-rn487x ble devices using AVRmicrocontroller.",
