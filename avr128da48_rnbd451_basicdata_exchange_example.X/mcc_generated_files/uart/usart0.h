@@ -7,10 +7,10 @@
  * 
  * @brief This file contains API prototypes and other datatypes for USART0 module.
  *
- * @version USART0 Driver Version 2.0.3
+ * @version USART0 Driver Version 2.1.0
 */
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -59,7 +59,7 @@
 #define UART0_Deinitialize   USART0_Deinitialize
 #define UART0_Write          USART0_Write
 #define UART0_Read           USART0_Read
-#define UART0__IsRxReady     USART0_IsRxReady
+#define UART0_IsRxReady      USART0_IsRxReady
 #define UART0_IsTxReady      USART0_IsTxReady
 #define UART0_IsTxDone       USART0_IsTxDone
 
@@ -67,11 +67,13 @@
 #define UART0_TransmitDisable      USART0_TransmitDisable
 #define UART0_AutoBaudSet          USART0_AutoBaudSet
 #define UART0_AutoBaudQuery        USART0_AutoBaudQuery
+#define UART0_IsAutoBaudDetectError        USART0_IsAutoBaudDetectError
+#define UART0_AutoBaudDetectErrorReset     USART0_AutoBaudDetectErrorReset
 #define UART0_BRGCountSet               (NULL)
 #define UART0_BRGCountGet               (NULL)
 #define UART0_BaudRateSet               (NULL)
 #define UART0_BaudRateGet               (NULL)
-#define UART0__AutoBaudEventEnableGet   (NULL)
+#define UART0_AutoBaudEventEnableGet    (NULL)
 #define UART0_ErrorGet             USART0_ErrorGet
 
 #define UART0_TxCompleteCallbackRegister     USART0_TxCompleteCallbackRegister

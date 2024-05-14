@@ -7,11 +7,11 @@
  * 
  * @brief This is the generated driver implementation file for the USART0 driver using 
  *
- * @version USART0 Driver Version 2.0.3
+ * @version USART0 Driver Version 2.1.0
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -85,13 +85,13 @@ const uart_drv_interface_t UART0 = {
 */
 static volatile uint8_t usart0TxHead = 0;
 static volatile uint8_t usart0TxTail = 0;
-static volatile uint8_t usart0TxBuffer[USART0_TX_BUFFER_SIZE];
 volatile uint8_t usart0TxBufferRemaining;
+static volatile uint8_t usart0TxBuffer[USART0_TX_BUFFER_SIZE];
 static volatile uint8_t usart0RxHead = 0;
 static volatile uint8_t usart0RxTail = 0;
+volatile uint8_t usart0RxCount;
 static volatile uint8_t usart0RxBuffer[USART0_RX_BUFFER_SIZE];
 static volatile usart0_status_t usart0RxStatusBuffer[USART0_RX_BUFFER_SIZE];
-volatile uint8_t usart0RxCount;
 static volatile usart0_status_t usart0RxLastError;
 
 /**

@@ -11,7 +11,7 @@
 -   [Hardware Setup](#hardware-setup)
 -   [Software Prerequisite](#software-prerequisite)
 -   [Project Setup](#project-setup)
--   [RNBD451 Setup and Running Example Application](#rnbd451-setup-and-running-example-application)
+-   [RNBD Setup and Running Example Application](#rnbd-setup-and-running-example-application)
     -   [RNBD Basic Data Exchange Pin Settings](#rnbd-basic-data-exchange-pin-settings)
     -   [RNBD Transparent UART Application Pin Settings](#rnbd-transparent-uart-application-pin-settings)
     -   [RNBD GPIO Based Connection Setup](#rnbd-gpio-based-connection-setup)
@@ -25,6 +25,13 @@
     -   [RN487x Example 1: Running Basic Data Exchange Example Application](#rn487x-example1:-running-basic-data-exchange-example-application)
     -   [RN487x Example 2: Running Transparent UART Example Application](#rn487x-example2:-running-transparent-uart-example-application)
 -   [Summary](#summary)
+
+<br />
+- **Notes**:
+
+ 1.   The project creation steps where RNBD is mentioned are applicable for both RNBD451 and RNBD350 devices.
+ <br />
+ 2.   The Over-the-Air (OTA) Device Firmware Update (DFU) support is not applicable for RNBD350-based applications because the OTA DFU for RNBD350 is implemented using the Host Microcontroller (MCU) DFU process. OTA is not supported for 8-bit applications due to memory limitation.
 
 # Introduction<a name="introduction"></a>
 
@@ -74,13 +81,13 @@ This library uses one Universal Asynchronous Receiver and Transmitter (UART), on
 
 
 # Software Used<a name="software-used"></a>
--   [MPLAB® X IDE 6.15](http://www.microchip.com/mplab/mplab-x-ide) or newer
+-   [MPLAB® X IDE 6.20](http://www.microchip.com/mplab/mplab-x-ide) or newer
 
--   [MPLAB XC8 2.41](http://www.microchip.com/mplab/compilers) or newer
--   [MPLAB Code Configurator 5.3.7](https://www.microchip.com/mplab/mplab-code-configurator) or newer
+-   [MPLAB XC8 2.46](http://www.microchip.com/mplab/compilers) or newer
+-   [MPLAB Code Configurator 5.5.1](https://www.microchip.com/mplab/mplab-code-configurator) or newer
 -   [MPLAB Code Configurator](https://www.microchip.com/mplab/mplab-code-configurator) Device Libraries AVR128Dx28/32/48/64, AVR64Dx28/32/48/64 Microcontrollers (MCUs)
 -   [MPLAB Code Configurator](https://www.microchip.com/mplab/mplab-code-configurator) Device Libraries AVR® MCUs
--   [Microchip AVR-Dx_DFP Series Device Support \(2.3.272\)](https://packs.download.microchip.com) or newer
+-   [Microchip AVR-Dx_DFP Series Device Support \(2.5.294\)](https://packs.download.microchip.com) or newer
 
 # Hardware Used<a name="hardware-used"></a>
 
@@ -88,20 +95,20 @@ This library uses one Universal Asynchronous Receiver and Transmitter (UART), on
 -   Curiosity Nano Base for Click Boards™ \([AC164162](https://www.microchip.com/en-us/development-tool/AC164162)\)
 
 # Hardware Setup<a name="hardware-setup"></a>
-## RNBD451 Pin Mapping and Hardware Setup
--   Pin mapping table between the MCU and the RNBD451 Click:
+## RNBD Pin Mapping and Hardware Setup
+-   Pin mapping table between the MCU and the RNBD Click:
 
-    | S.no | Pin Functionality | AVR | RNBD451 Click |
+    | S.no | Pin Functionality | AVR |  RNBD  Click  |
     |------|-------------------|-----|---------------|
     |   1  | Receive (RxD)     | RA1 |     Tx        |
     |   2  | Transmit (TxD)    | RA0 |     Rx        |
     |   3  | BT_RST            | RD7 |     RST       |
 
--   Connect the development board of your choice and then connect the RNBD451 to the proper slot. The image below shows how to connect the RNBD451 Click to **Slot 1**.
+-   Connect the development board of your choice and then connect the RNBD to the proper slot. The image below shows how to connect the RNBD Click to **Slot 1**.
 
     ![](images/GUID-349DACB9-0CD8-42B7-B586-B39B507961D5-low.png)
 
-    **Important:** The slot was decided based on the UART instances which were configured for this example (see the pin mapping table between the MCU and the RNBD451 Click).
+    **Important:** The slot was decided based on the UART instances which were configured for this example (see the pin mapping table between the MCU and the RNBD Click).
 ## RN487x Pin Mapping and Hardware Setup
 -   Pin mapping table between the MCU and the RN487x Click:
 
@@ -258,9 +265,9 @@ Install the MPLAB Code Configurator Plug-in:
 
 <br />
 
-# RNBD451 Setup and Running Example Application<a name="rnbd451-setup-and-running-example-application"></a>
+# RNBD Setup and Running Example Application<a name="rnbd-setup-and-running-example-application"></a>
 
-This section explains the RNBD451 MPLAB X IDE project setup, code generation, and shows how to run the Basic Data Exchange and Transparent UART applications with the AVR128DA48 microcontroller.
+This section explains the RNBD MPLAB X IDE project setup, code generation, and shows how to run the Basic Data Exchange and Transparent UART applications with the AVR128DA48 microcontroller.
 
 ## RNBD Basic Data Exchange Pin Settings<a name="rnbd-basic-data-exchange-pin-settings"></a>
 <br />
@@ -284,13 +291,13 @@ This section explains the RNBD451 MPLAB X IDE project setup, code generation, an
 
         <br />
 
-        ![](images/GUID-184EEDCA-BCE8-44F7-86F2-3737192B2CC8-low.png)
-
-        <br />
-
-        <br />
-
         ![](images/GUID-D689B156-8059-457F-A70D-3376836ED3A7-low.png)
+
+        <br />
+
+        <br />
+
+        ![](images/GUID-184EEDCA-BCE8-44F7-86F2-3737192B2CC8-low.png)
 
         <br />
 
@@ -332,7 +339,7 @@ Configuration for AVR Transparent UART was completed. Click [here](#rnbd-code-ge
 
 ## RNBD GPIO Based Connection Setup<a name="rnbd-gpio-based-connection-setup"></a>
 
-The RNBD451 device can use Bluetooth (BT) Status Indication 1 and Bluetooth (BT) Status Indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the Host MCU can verify the BT connection status, by monitoring the Status Indication pins.
+The RNBD device can use Bluetooth (BT) Status Indication 1 and Bluetooth (BT) Status Indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the Host MCU can verify the BT connection status, by monitoring the Status Indication pins.
 
 **Bluetooth (BT) Status Indication Pin Table**
 
@@ -471,7 +478,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
     <br />
 
-4.  Select the RNDB device from the list, then click the **CONNECT** button to connect to the RNDB module.
+4.  Select the RNBD device from the list, then click the **CONNECT** button to connect to the RNDB module.
 
     <br />
 
@@ -479,7 +486,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
     <br />
 
-5.  Once connected, the Microchip Bluetooth app identifies all the services and characteristics supported by the RNBD451 device.
+5.  Once connected, the Microchip Bluetooth app identifies all the services and characteristics supported by the RNBD device.
 
     ![](images/GUID-AC320004-8543-404F-806A-4C5E70E09E3B-low.png)
 
@@ -494,7 +501,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
             ![](images/GUID-C5223277-D33D-4366-8CA4-124D340F0554-low.png)
 
-       -   After turning on the Notify/Indicate setting, the mobile application can read "31", data which was sent from the RNBD451 module
+       -   After turning on the Notify/Indicate setting, the mobile application can read "31", data which was sent from the RNBD module
 
             ![](images/GUID-83D3CD62-CA8C-4C6C-88AF-CA15728E6392-low.png)
 
@@ -563,7 +570,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
     <br />
 
-6.  Enter the text to be transferred from mobile to the RNB45x device and click the **Send** button.
+6.  Enter the text to be transferred from mobile to the RNBD device and click the **Send** button.
 
     <br />
 
@@ -571,7 +578,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
     <br />
 
-    - The data will be received on the RNBD45x side and will be displayed in the serial terminal of RNBD45x
+    - The data will be received on the RNBD side and will be displayed in the serial terminal of RNBD45x
 
     <br />
 
@@ -579,7 +586,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
     <br />
 
-7.  Type any data on the serial terminal of the RNBD45x to send to the Microchip Bluetooth Data app. The data is received and printed on the receive view of the app.
+7.  Type any data on the serial terminal of the RNBD to send to the Microchip Bluetooth Data app. The data is received and printed on the receive view of the app.
 
     <br />
 
@@ -634,7 +641,7 @@ This section explains the RN487x MPLAB X IDE project setup, code generation, and
         <br />
 
 
-Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-code-generation-&-compilation) for rn487x code generation and compilation section.
+Configuration for AVR Basic Data Exchange was completed. Click [here](#rn487x-code-generation-&-compilation) for RN487x code generation and compilation section.
 
 
 ## RN487x Transparent UART Application Pin Settings<a name="rn487x-transparent-uart-application-pin-settings"></a>
@@ -682,7 +689,7 @@ Configuration for AVR Transparent UART application was completed. Click [here](#
 
     <br />
 
-4.  Connect the development board of your choice and then connect the RN487x to the proper slot. The image below shows how to connect the RNBD Click to **Slot 1**.
+4.  Connect the development board of your choice and then connect the RN487x to the proper slot. The image below shows how to connect the RN487x Click to **Slot 1**.
 
     <br />
 
