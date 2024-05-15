@@ -98,11 +98,11 @@ This library uses one Universal Asynchronous Receiver and Transmitter (UART), on
 ## RNBD Pin Mapping and Hardware Setup
 -   Pin mapping table between the MCU and the RNBD Click:
 
-    | S.no | Pin Functionality | AVR |  RNBD  Click  |
-    |------|-------------------|-----|---------------|
-    |   1  | Receive (RxD)     | RA1 |     Tx        |
-    |   2  | Transmit (TxD)    | RA0 |     Rx        |
-    |   3  | BT_RST            | RD7 |     RST       |
+    | S. No | Pin Functionality | AVR |  RNBD  Click  |
+    |-------|-------------------|-----|---------------|
+    |   1   | Receive (RxD)     | RA1 |     Tx        |
+    |   2   | Transmit (TxD)    | RA0 |     Rx        |
+    |   3   | BT_RST            | RD7 |     RST       |
 
 -   Connect the development board of your choice and then connect the RNBD to the proper slot. The image below shows how to connect the RNBD Click to **Slot 1**.
 
@@ -112,11 +112,11 @@ This library uses one Universal Asynchronous Receiver and Transmitter (UART), on
 ## RN487x Pin Mapping and Hardware Setup
 -   Pin mapping table between the MCU and the RN487x Click:
 
-    | S.no | Pin Functionality | AVR | RN487x Click |
-    |------|-------------------|-----|--------------|
-    |   1  | Receive (RxD)     | RA1 |     Tx       |
-    |   2  | Transmit (TxD)    | RA0 |     Rx       |
-    |   3  | BT_RST            | RD7 |     RST      |
+    | S. No | Pin Functionality | AVR | RN487x Click |
+    |-------|-------------------|-----|--------------|
+    |   1   | Receive (RxD)     | RA1 |     Tx       |
+    |   2   | Transmit (TxD)    | RA0 |     Rx       |
+    |   3   | BT_RST            | RD7 |     RST      |
 
 -   Connect the development board of your choice and then connect the RN487x to the proper slot. The image below shows how to connect the RN487x Click to **Slot 1**.
 
@@ -431,11 +431,11 @@ Configuration for GPIO based  connection was completed. Click [here](#rnbd-code-
     - Pin mapping table between MCU and RNBD Click
         <br />
 
-        |S.no|Pin Functionality|AVR|RNBD Click|
-        |----|-----------------|---|----------|
-        |  1 |Receive (RxD)    |RA1| Tx       |
-        |  2 |Transmit (TxD)   |RA0| Rx       |
-        |  3 |BT_RST           |RD7| RST      |
+        |S. No|Pin Functionality|AVR|RNBD Click|
+        |-----|-----------------|---|----------|
+        |  1  |Receive (RxD)    |RA1| Tx       |
+        |  2  |Transmit (TxD)   |RA0| Rx       |
+        |  3  |BT_RST           |RD7| RST      |
 
         <br />
 
@@ -700,11 +700,11 @@ Configuration for AVR Transparent UART application was completed. Click [here](#
     - Pin mapping table between MCU and RN487x Click
         <br />
 
-        |S.no|PIN Functionality|AVR|RN487x Click|
-        |----|-----------------|---|------------|
-        |1|Receive (RxD)|RA1|Tx|
-        |2|Transmit (TxD)|RA0|Rx|
-        |3|BT_RST|RD7|RST|
+        |S. No|PIN Functionality|AVR|RN487x Click|
+        |-----|-----------------|---|------------|
+        |1|Receive  (RxD)|RA1|Tx|
+        |2|Transmit  (TxD)|RA0|Rx|
+        |3|BT_RST |RD7|RST|
 
         <br />
 
