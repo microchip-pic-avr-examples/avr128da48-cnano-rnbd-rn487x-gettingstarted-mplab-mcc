@@ -27,11 +27,10 @@
 -   [Summary](#summary)
 
 <br />
-- **Notes**:
-
- 1.   The project creation steps where RNBD is mentioned are applicable for both RNBD451 and RNBD350 devices.
+**Notes**<br />
+ 1. The project creation steps where RNBD is mentioned are applicable for both RNBD451 and RNBD350 devices.
  <br />
- 2.   The Over-the-Air (OTA) Device Firmware Update (DFU) support is not applicable for RNBD350-based applications because the OTA DFU for RNBD350 is implemented using the Host Microcontroller (MCU) DFU process. OTA is not supported for 8-bit applications due to memory limitation.
+ 2. The Over-the-Air (OTA) Device Firmware Update (DFU) support is not applicable for RNBD350-based applications because the OTA DFU for RNBD350 is implemented using the Host Microcontroller (MCU) DFU process. OTA is not supported for 8-bit applications due to memory limitation.
 
 # Introduction<a name="introduction"></a>
 
@@ -122,7 +121,7 @@ This library uses one Universal Asynchronous Receiver and Transmitter (UART), on
 
     ![](images/GUID-0C54F6CA-B754-49CA-AD3D-618A3786D559-low.png)
 
-    **Important:** The Slot was decided based on the UART instances which were configured for this example application (see the pin mapping table between the MCU and the RN487x Click).
+    **Important:** The slot was decided based on the UART instances which were configured for this example application (see the pin mapping table between the MCU and the RN487x Click).
 
 # Software Prerequisite<a name="software-prerequisite"></a>
 
@@ -234,7 +233,7 @@ Install the MPLAB Code Configurator Plug-in:
 
         <br />
 
-    -   Set "Internal high-frequency oscillator to 20 MHz system clock, toggle ON the "Prescaler Enable" option and set the "Prescaler Divison" to 2x.
+    -   Set "Internal high-frequency oscillator" to 20 MHz system clock, toggle ON the "Prescaler Enable" option and set the "Prescaler Divison" to 2x.
 
         <br />
 
@@ -339,7 +338,7 @@ Configuration for AVR Transparent UART was completed. Click [here](#rnbd-code-ge
 
 ## RNBD GPIO Based Connection Setup<a name="rnbd-gpio-based-connection-setup"></a>
 
-The RNBD device can use Bluetooth (BT) Status Indication 1 and Bluetooth (BT) Status Indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the Host MCU can verify the BT connection status, by monitoring the Status Indication pins.
+The RNBD device can use Bluetooth (BT) Status Indication 1 and Bluetooth (BT) Status Indication 2 pins to indicate the GPIO connection status. Besides monitoring the connect message in the serial UART prints, this feature is useful when the host MCU can verify the BT connection status, by monitoring the Status Indication pins.
 
 **Bluetooth (BT) Status Indication Pin Table**
 
@@ -470,7 +469,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
       ![](images/GUID-E19A7964-8190-4C53-8BBA-6370A19C9829-low.png)
 
-3.  The application scans the area for Bluetooth devices within range. By default, the device should appears as "RNBD451_xxxx". Look for the "RNBD" device under scanned list.
+3.  The application scans the area for Bluetooth devices within range. By default, the device appears as "RNBD451_xxxx". Look for the "RNBD" device under the scan list.
 
     <br />
 
@@ -497,7 +496,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 7.  Select "Listen for notifications" on the application.
       -   It may be required to enable app notifications on the phone. Data will be sent periodically to the device and will be visible beneath the Notify/Listen setting.
 
-       -   Before turning on the Notify/Indicate setting
+       -   Before turning on the Notify/Indicate setting:
 
             ![](images/GUID-C5223277-D33D-4366-8CA4-124D340F0554-low.png)
 
@@ -540,7 +539,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
     <br />
 
-4.  For Transparent Serial only: Open a Serial Terminal Program such as Tera Term, Realterm, PuTTY, Serial, or similar. Baud rate will be configured as 115200.
+4.  For Transparent Serial only: Open a Serial Terminal Program such as Tera Term, Realterm, PuTTY, Serial or similar. Baud rate will be configured as 115200.
 
     <br />
 
@@ -695,7 +694,7 @@ Configuration for AVR Transparent UART application was completed. Click [here](#
 
     ![](images/GUID-0C54F6CA-B754-49CA-AD3D-618A3786D559-low.png)
 
-    **Important:** Slot was decided based on the UART instances which was configured for this example application (see the pin mapping table between the MCU and the RN487x Click shown below).
+    **Important:** The slot was decided based on the UART instances which was configured for this example application (see the pin mapping table between the MCU and the RN487x Click shown below).
 
     - Pin mapping table between MCU and RN487x Click
         <br />
@@ -738,7 +737,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
       ![](images/GUID-E19A7964-8190-4C53-8BBA-6370A19C9829-low.png)
 
-3.  The application automatically scan the area for Bluetooth devices within range. Look for the "RN487x" device under scanned list.
+3.  The application automatically scan the area for Bluetooth devices within range. Look for the "RN487x" device under the scan list.
 
     <br />
 
@@ -773,7 +772,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 7.  Select "Listen for notifications" on the application.
     -   It may be required to enable app notifications on the phone. Data will be sent periodically to the device and will be visible beneath the Notify/Listen setting.
 
-        -   Before turning on the Notify/Indicate setting
+        -   Before turning on the Notify/Indicate setting:
 
             <br />
 
@@ -821,7 +820,7 @@ This example shows how the data transmitted from a PC serial terminal is written
 
     <br />
 
-    - Click the **'Scan image'** icon to scan for the nearby "RN487x-xxxx"
+    - Click the '**Scan image**' icon to scan for the nearby "RN487x-xxxx"
 
       <br />
 
@@ -943,7 +942,7 @@ The library allows the configuration of three pins associated with support featu
 
 |Library Name: Output\(s\)|Module: Input\(s\)|Description|Module Physical Defaults|
 |-------------------------|------------------|-----------|------------------------|
-|BT\_MODE|P2\_0|<br /> `1` : Application Mode<br /> `0` : Test Mode/Flash Update/EEPROM Configuration<br />|Active-Low, Internal Pull-High|
+|BT\_MODE|P2\_0|<br /> `1`: Application Mode<br /> `0`: Test Mode/Flash Update/EEPROM Configuration<br />|Active-Low, Internal Pull-High|
 |BT\_RST|RST\_N|Module Reset|Active-Low, Internal Pull-High|
 |BT\_RX\_IND|P3\_3|Configured as UART RX Indication pin|Active-Low|
 
