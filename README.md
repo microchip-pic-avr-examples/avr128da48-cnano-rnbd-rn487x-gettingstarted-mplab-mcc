@@ -26,7 +26,7 @@
     -   [RN487x Example 2: Running Transparent UART Example Application](#rn487x-example2:-running-transparent-uart-example-application)
 -   [Summary](#summary)
 
-<br />
+
 **Notes**<br />
  1. The project creation steps where RNBD is mentioned are applicable for both RNBD451 and RNBD350 devices.
  <br />
@@ -477,7 +477,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
     <br />
 
-4.  Select the RNBD device from the list, then click the **CONNECT** button to connect to the RNDB module.
+4.  Select the RNBD device from the list, then click the **CONNECT** button to connect to the RNBD module.
 
     <br />
 
@@ -515,7 +515,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
 <br />
 
-This example shows how the data transmitted from a PC serial terminal is written to a smartphone application and vice versa. The MCU acts as a bridge while passing data between RNDB module <--- MCU ---> Serial Terminal. This action will occur when STREAM_OPEN is processed through the Message Handler. For this example, data typed into the Serial Terminal will appear on the BLE phone application, and data sent from the application will appear on the Serial Terminal.
+This example shows how the data transmitted from a PC serial terminal is written to a smartphone application and vice versa. The MCU acts as a bridge while passing data between RNBD module <--- MCU ---> Serial Terminal. This action will occur when STREAM_OPEN is processed through the Message Handler. For this example, data typed into the Serial Terminal will appear on the BLE phone application, and data sent from the application will appear on the Serial Terminal.
 
 <br />
 
@@ -745,7 +745,7 @@ The `#define DEMO_PERIODIC_TRANSMIT_COUNT (10000)` and `#define DEMO_PERIODIC_CH
 
     <br />
 
-4.  Select the RN487x device from the list, then click the **CONNECT** button to connect to the RNDB module.
+4.  Select the RN487x device from the list, then click the **CONNECT** button to connect to the RNBD module.
 
     <br />
 
