@@ -27,10 +27,11 @@
 -   [Summary](#summary)
 
 
-**Notes**<br />
- 1. The project creation steps where RNBD is mentioned are applicable for both RNBD451 and RNBD350 devices.
- <br />
- 2. The Over-the-Air (OTA) Device Firmware Update (DFU) support is not applicable for RNBD350-based applications because the OTA DFU for RNBD350 is implemented using the Host Microcontroller (MCU) DFU process. OTA is not supported for 8-bit applications due to memory limitation.
+**Notes:**
+
+1.   The project creation steps where RNBD is mentioned are applicable for both RNBD451 and RNBD350 devices.
+2.   The Over-the-Air (OTA) Device Firmware Update (DFU) support is not applicable for RNBD350-based applications because the OTA DFU for RNBD350 is implemented using the Host Microcontroller (MCU) DFU process. OTA is not supported for 8-bit applications due to memory limitation.
+
 
 # Introduction<a name="introduction"></a>
 
